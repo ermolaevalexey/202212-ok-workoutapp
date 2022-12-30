@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "1.7.21"
 }
 
-group = "ru.otus.otukotlin.workoutapp"
+group = "ru.otus.otuskotlin.workoutapp"
 version = "0.0.1"
 
 subprojects {
