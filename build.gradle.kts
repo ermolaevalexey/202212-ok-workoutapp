@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "ru.otus.otukotlin.workoutapp"
-version = "1.0-SNAPSHOT"
+version = "0.0.1"
 
 subprojects {
     group = rootProject.group
