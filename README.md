@@ -19,9 +19,59 @@ It-специалисты начального уровня/стажеры -- р
 5. Как правило, живет в съемном жилье/с родителями/в студенческом общежитии.
 
 ## Описание MVP
+MVP представляет собой мобильное приложение, 
+с набором тренировок, сгруппированным по трем групам мышц, а также 
 
 <p float="left">
     <img src="img/WorkoutApp_main_screen.png" alt="Главный экран" width="180">
     <img src="img/WorkoutApp_section_screen.png" alt="Экран секции" width="180">
     <img src="img/WorkoutApp_workout_screen.png" alt="Экран тренировки" width="180">
 </p>
+
+### Функции (эндпоинты)
+
+1. workouts - тренировки
+   create - создается модератором
+   read
+   update
+
+2. feedback
+   read
+   create - отправить отзыв
+   update - изменить отзыв, изменить оценку, добавить фото
+   delete
+
+### Описание сущностей 
+
+#### Workout
+ - Title - название тренировки
+ - Description - краткое описание тренировки
+ - Type - тип тренировки [WorkoutType](#WorkoutType)
+ - Equipment - оборудование для тренировки [Equipment](#Equipment)
+ - Content 
+   - video - видеоматериал тренировки (строка с URL видео)
+   - steps - текстовое описание шагов тренировки - массив [WorkoutStep](#WorkoutStep) 
+ - Feedback - [Feedback](#Feedback)
+ - Rating - общая оценка тренировки (Double)
+
+#### WorkoutStep
+ - Title - название шага
+ - Description - текстовое описание шага
+
+#### Feedback
+ - Review - отзыв пользователя (Текст комментария)
+ - Rating - оценка пользователя
+
+#### WorkoutType
+ Enum. Тип тренировки по группе мышц.
+ - Core - пресс и корпус
+ - Arms - руки и плечи
+ - Legs - ноги и ягодицы
+
+#### Equipment
+ Enum. Оборудование для тренировки.
+ - OwnWeight - собственный вес
+ - Dumbbells - гантели
+ - JumpingRope - скакалка
+ - HorizontalBar - турник
+ - Bars - брусья
