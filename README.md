@@ -21,7 +21,7 @@ It-специалисты начального уровня/стажеры -- р
 ## Описание MVP
 
 <p float="left">
-    <img src="img/WorkoutApp_main_screen.jpeg" alt="Главный экран" width="180">
-    <img src="img/WorkoutApp_section_screen.jpeg" alt="Экран секции" width="180">
-    <img src="img/WorkoutApp_workout_screen.jpeg" alt="Экран тренировки" width="180">
+    <img src="img/WorkoutApp_main_screen.png" alt="Главный экран" width="180">
+    <img src="img/WorkoutApp_section_screen.png" alt="Экран секции" width="180">
+    <img src="img/WorkoutApp_workout_screen.png" alt="Экран тренировки" width="180">
 </p>
