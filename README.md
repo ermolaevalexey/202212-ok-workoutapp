@@ -23,4 +23,5 @@ It-специалисты начального уровня/стажеры -- р
 <p float="left">
     <img src="img/WorkoutApp_main_screen.png" alt="Главный экран" width="180">
     <img src="img/WorkoutApp_section_screen.png" alt="Экран секции" width="180">
+    <img src="img/WorkoutApp_workout_screen.png" alt="Экран тренировки" width="180">
 </p>
