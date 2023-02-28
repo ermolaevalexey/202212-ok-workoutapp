@@ -8,11 +8,12 @@
 - Content
     - video - видеоматериал тренировки (строка с URL видео)
     - steps - текстовое описание шагов тренировки - массив [WorkoutStep](#WorkoutStep)
-- Feedback - [Feedback](#Feedback)
+- Feedback - массив [Feedback](#Feedback)
 - Rating - общая оценка тренировки (Double)
 
 ## WorkoutStep
 - Title - название шага
+- Timecode - таймкод для видео с выполнением шага (в формате "mm:ss")
 - Description - текстовое описание шага
 
 ## Feedback
