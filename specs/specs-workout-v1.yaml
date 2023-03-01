@@ -535,7 +535,10 @@ components:
       allOf:
         - $ref: "#/components/schemas/Request"
         - $ref: "#/components/schemas/RequestDebug"
-        - $ref: "#/components/schemas/FeedbackCreateRequestPayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackCreateRequestPayload"
 
     FeedbackReadRequest:
       allOf:
@@ -547,54 +550,84 @@ components:
       allOf:
         - $ref: "#/components/schemas/Request"
         - $ref: "#/components/schemas/RequestDebug"
-        - $ref: "#/components/schemas/FeedbackUpdateRequestPayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackUpdateRequestPayload"
 
     FeedbackDeleteRequest:
       allOf:
         - $ref: "#/components/schemas/Request"
         - $ref: "#/components/schemas/RequestDebug"
-        - $ref: "#/components/schemas/FeedbackDeleteRequestPayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackDeleteRequestPayload"
 
     # RESPONSES OBJECTS ======================
     WorkoutCreateResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/WorkoutCreateResponsePayload"
+        - type: object
+          properties:
+            workout:
+              $ref: "#/components/schemas/WorkoutCreateResponsePayload"
 
     WorkoutReadResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/WorkoutReadResponsePayload"
+        - type: object
+          properties:
+            workout:
+              $ref: "#/components/schemas/WorkoutReadResponsePayload"
 
     WorkoutUpdateResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/WorkoutUpdateResponsePayload"
+        - type: object
+          properties:
+            workout:
+              $ref: "#/components/schemas/WorkoutUpdateResponsePayload"
 
     WorkoutSearchResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/WorkoutSearchResponsePayload"
+        - type: object
+          properties:
+            workout:
+              $ref: "#/components/schemas/WorkoutSearchResponsePayload"
 
     FeedbackCreateResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/FeedbackCreateResponsePayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackCreateResponsePayload"
 
     FeedbackReadResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/FeedbackReadResponsePayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackReadResponsePayload"
 
     FeedbackUpdateResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/FeedbackUpdateResponsePayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackUpdateResponsePayload"
 
     FeedbackDeleteResponse:
       allOf:
         - $ref: "#/components/schemas/Response"
-        - $ref: "#/components/schemas/FeedbackDeleteResponsePayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackDeleteResponsePayload"
 
     # STUBS ======================
     RequestDebugMode:
