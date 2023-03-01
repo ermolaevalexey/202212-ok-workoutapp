@@ -578,22 +578,22 @@ components:
 
     FeedbackCreateResponse:
       allOf:
-        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/Response"
         - $ref: "#/components/schemas/FeedbackCreateResponsePayload"
 
     FeedbackReadResponse:
       allOf:
-        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/Response"
         - $ref: "#/components/schemas/FeedbackReadResponsePayload"
 
     FeedbackUpdateResponse:
       allOf:
-        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/Response"
         - $ref: "#/components/schemas/FeedbackUpdateResponsePayload"
 
     FeedbackDeleteResponse:
       allOf:
-        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/Response"
         - $ref: "#/components/schemas/FeedbackDeleteResponsePayload"
 
     # STUBS ======================
