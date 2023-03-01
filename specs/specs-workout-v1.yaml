@@ -444,11 +444,12 @@ components:
       type: object
       properties:
         groupBy:
-          type: array
-          items:
-            anyOf:
-              - $ref: "#/components/schemas/WorkoutType"
-              - $ref: "#/components/schemas/Equipment"
+          type: object
+          properties:
+            workoutType:
+              type: boolean
+            equipment:
+              type: boolean
 
     # RESPONSES PAYLOAD OBJECTS ======================
     WorkoutSearchResponsePayload:
@@ -460,13 +461,11 @@ components:
             type: object
             properties:
               groupName:
-                anyOf:
-                  - $ref: "#/components/schemas/WorkoutType"
-                  - $ref: "#/components/schemas/Equipment"
+                type: string
               workouts:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Workout"
+                  $ref: "#/components/schemas/WorkoutCreateResponsePayload"
 
     FeedbackCreateResponsePayload:
       allOf:
@@ -529,7 +528,11 @@ components:
       allOf:
         - $ref: "#/components/schemas/Request"
         - $ref: "#/components/schemas/RequestDebug"
-        - $ref: "#/components/schemas/WorkoutSearchRequestPayload"
+        - type: object
+          properties:
+            params:
+              $ref: "#/components/schemas/WorkoutSearchRequestPayload"
+
 
     FeedbackCreateRequest:
       allOf:
