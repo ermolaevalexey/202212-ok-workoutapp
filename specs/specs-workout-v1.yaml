@@ -25,17 +25,393 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./schemas/_requests.yaml#/WorkoutCreateRequest"
+              $ref: "#/components/schemas/WorkoutCreateRequest"
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: "./schemas/_responses.yaml#/WorkoutCreateResponse"
+                $ref: "#/components/schemas/WorkoutCreateResponse"
 
 
+components:
+  schemas:
+    Equipment:
+      type: string
+      description: Equipment required for training
+      enum:
+        - OwnWeight
+        - Dumbbells
+        - JumpingRope
+        - HorizontalBar
+        - Bars
 
+    WorkoutType:
+      type: string
+      description: Workout muscle group
+      enum:
+        - Core
+        - Arms
+        - Legs
+
+    Feedback:
+      type: object
+      description: User's feedback of the training
+      properties:
+        review:
+          type: string
+          description: User's comment of the training
+        rating:
+          type: number
+          description: User's rating of the training
+
+    UserId:
+      type: string
+      description: Current user's identifier
+
+    WorkoutId:
+      type: string
+      description: Current training's identifier
+
+    FeedbackId:
+      type: string
+      description: Current feedback's identifier
+
+    WorkoutBase:
+      type: object
+      description: Workout
+      properties:
+        title:
+          type: string
+          description: Title of the training
+        description:
+          type: string
+          description: Brief description of the training
+        type:
+          $ref: "#/components/schemas/WorkoutType"
+        equipment:
+          $ref: "#/components/schemas/Equipment"
+        content:
+          type: object
+          description: Training content
+          properties:
+            video:
+              type: string
+              description: Video content of training
+            steps:
+              type: array
+              items:
+                $ref: "#/components/schemas/WorkoutStep"
+
+    WorkoutStep:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Title of the training step
+        description:
+          type: string
+          description: Description of the current step
+        timecode:
+          type: string
+          description: Timecode on the video of current step execution (mm:ss format)
+
+    Workout:
+      allOf:
+        - $ref: "#/components/schemas/WorkoutBase"
+        - type: object
+          properties:
+            feedback:
+              type: array
+              items:
+                $ref: "#/components/schemas/Feedback"
+            rating:
+              type: number
+              description: Common rating of the training based on users' ratings
+
+    Request:
+      type: object
+      description: Basic interface for all requests
+      properties:
+        requestType:
+          type: string
+          description: Discriminator field for detection type of request
+          example: workoutCreate
+        requestId:
+          type: string
+          description: Request identifier for debugging
+      discriminator:
+        propertyName: requestType
+        mapping:
+          workoutCreate: "#/components/schemas/WorkoutCreateRequest"
+          workoutRead: "#/components/schemas/WorkoutReadRequest"
+          workoutUpdate: "#/components/schemas/WorkoutUpdateRequest"
+          workoutSearch: "#/components/schemas/WorkoutSearchRequest"
+          feedbackCreate: "#/components/schemas/FeedbackCreateRequest"
+          feedbackRead: "#/components/schemas/FeedbackReadRequest"
+          feedbackUpdate: "#/components/schemas/FeedbackUpdateRequest"
+          feedbackDelete: "#/components/schemas/FeedbackDeleteRequest"
+
+    Response:
+      type: object
+      description: Basic interface for all responses
+      properties:
+        responseType:
+          type: string
+          description: Discriminator field for detection type of request
+          example: workoutCreate
+        requestId:
+          type: string
+          description: Request identifier for debugging
+        result:
+          $ref: "./schemas/result.yaml#/Result"
+        errors:
+          type: array
+          items:
+            $ref: "./schemas/error.yaml#/Error"
+      discriminator:
+        propertyName: responseType
+        mapping:
+          workoutCreate: "#/components/schemas/WorkoutCreateResponse"
+          workoutRead: "#/components/schemas/WorkoutReadResponse"
+          workoutUpdate: "#/components/schemas/WorkoutUpdateResponse"
+          workoutSearch: "#/components/schemas/WorkoutSearchResponse"
+          feedbackCreate: "#/components/schemas/FeedbackCreateResponse"
+          feedbackRead: "#/components/schemas/FeedbackReadResponse"
+          feedbackUpdate: "#/components/schemas/FeedbackUpdateResponse"
+          feedbackDelete: "#/components/schemas/FeedbackDeleteResponse"
+
+    WorkoutCreateRequestPayload:
+      type: object
+      properties:
+        workout:
+          $ref: "#/components/schemas/WorkoutBase"
+
+    WorkoutCreateRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/WorkoutCreateRequestPayload"
+
+    WorkoutReadRequestPayload:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/WorkoutId"
+
+    WorkoutUpdateRequestPayload:
+      type: object
+      properties:
+        workout:
+          allOf:
+            - $ref: "#/components/schemas/WorkoutId"
+            - $ref: "#/components/schemas/Workout"
+
+    FeedbackCreateRequestPayload:
+      allOf:
+        - type: object
+          properties:
+            workout:
+              $ref: "#/components/schemas/WorkoutId"
+            user:
+              $ref: "#/components/schemas/UserId"
+        - $ref: "#/components/schemas/Feedback"
+
+    FeedbackReadRequestPayload:
+      allOf:
+        - type: object
+          properties:
+            workout:
+              $ref: "#/components/schemas/WorkoutId"
+
+    FeedbackUpdateRequestPayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/FeedbackId"
+            user:
+              $ref: "#/components/schemas/UserId"
+        - $ref: "#/components/schemas/Feedback"
+
+    FeedbackDeleteRequestPayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/FeedbackId"
+            user:
+              $ref: "#/components/schemas/UserId"
+
+    WorkoutCreateResponsePayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/WorkoutId"
+        - $ref: "#/components/schemas/Workout"
+
+    WorkoutUpdateResponsePayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/WorkoutId"
+        - $ref: "#/components/schemas/Workout"
+
+    WorkoutReadResponsePayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/WorkoutId"
+        - $ref: "#/components/schemas/Workout"
+
+    WorkoutSearchRequestPayload:
+      type: object
+      properties:
+        groupBy:
+          type: array
+          items:
+            anyOf:
+              - $ref: "#/components/schemas/WorkoutType"
+              - $ref: "#/components/schemas/Equipment"
+
+    WorkoutSearchResponsePayload:
+      type: object
+      properties:
+        groups:
+          type: array
+          items:
+            type: object
+            properties:
+              groupName:
+                anyOf:
+                  - $ref: "#/components/schemas/WorkoutType"
+                  - $ref: "#/components/schemas/Equipment"
+              workouts:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Workout"
+
+    FeedbackCreateResponsePayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/FeedbackId"
+            user:
+              $ref: "#/components/schemas/UserId"
+            workout:
+              $ref: "#/components/schemas/WorkoutId"
+        - $ref: "#/components/schemas/Feedback"
+
+    FeedbackReadResponsePayload:
+      type: object
+      properties:
+        workout:
+          $ref: "#/components/schemas/WorkoutId"
+        feedback:
+          type: array
+          items:
+            $ref: "#/components/schemas/Feedback"
+
+    FeedbackUpdateResponsePayload:
+      allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/FeedbackId"
+            user:
+              $ref: "#/components/schemas/UserId"
+            workout:
+              $ref: "#/components/schemas/WorkoutId"
+        - $ref: "#/components/schemas/Feedback"
+
+    FeedbackDeleteResponsePayload:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/FeedbackId"
+        user:
+          $ref: "#/components/schemas/UserId"
+        workout:
+          $ref: "#/components/schemas/WorkoutId"
+
+    WorkoutReadRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/WorkoutReadRequestPayload"
+
+    WorkoutUpdateRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/WorkoutUpdateRequestPayload"
+
+    WorkoutSearchRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/WorkoutSearchRequestPayload"
+
+    FeedbackCreateRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackCreateRequestPayload"
+
+    FeedbackReadRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackReadRequestPayload"
+
+    FeedbackUpdateRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackUpdateRequestPayload"
+
+    FeedbackDeleteRequest:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackDeleteRequestPayload"
+
+    WorkoutCreateResponse:
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - $ref: "#/components/schemas/WorkoutCreateResponsePayload"
+
+    WorkoutReadResponse:
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - $ref: "#/components/schemas/WorkoutReadResponsePayload"
+
+    WorkoutUpdateResponse:
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - $ref: "#/components/schemas/WorkoutUpdateResponsePayload"
+
+    WorkoutSearchResponse:
+      allOf:
+        - $ref: "#/components/schemas/Response"
+        - $ref: "#/components/schemas/WorkoutSearchResponsePayload"
+
+    FeedbackCreateResponse:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackCreateResponsePayload"
+
+    FeedbackReadResponse:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackReadResponsePayload"
+
+    FeedbackUpdateResponse:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackUpdateResponsePayload"
+
+    FeedbackDeleteResponse:
+      allOf:
+        - $ref: "#/components/schemas/Request"
+        - $ref: "#/components/schemas/FeedbackDeleteResponsePayload"
 #  /workouts/read:
 #  /workouts/update:
 #  /feedback/create:
