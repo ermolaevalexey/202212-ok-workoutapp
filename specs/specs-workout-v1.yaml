@@ -194,6 +194,13 @@ components:
         - Arms
         - Legs
 
+    WorkoutSearchGroupBy:
+      type: string
+      description: Workout search grouping parameter
+      enum:
+        - workoutType
+        - equipment
+
     FeedbackUser:
       type: object
       properties:
@@ -444,12 +451,9 @@ components:
       type: object
       properties:
         groupBy:
-          type: object
-          properties:
-            workoutType:
-              type: boolean
-            equipment:
-              type: boolean
+          type: array
+          items:
+            $ref: "#/components/schemas/WorkoutSearchGroupBy"
 
     # RESPONSES PAYLOAD OBJECTS ======================
     WorkoutSearchResponsePayload:

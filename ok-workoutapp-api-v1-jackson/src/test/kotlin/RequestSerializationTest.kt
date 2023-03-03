@@ -39,10 +39,7 @@ class RequestSerializationTest {
       stub = RequestDebugStubs.BAD_TITLE
     ),
     params = WorkoutSearchRequestPayload(
-      groupBy = WorkoutSearchRequestPayloadGroupBy(
-        workoutType = false,
-        equipment = true
-      )
+      groupBy = listOf(WorkoutSearchGroupBy.EQUIPMENT, WorkoutSearchGroupBy.WORKOUT_TYPE)
     )
   )
 
