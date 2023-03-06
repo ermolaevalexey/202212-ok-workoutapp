@@ -223,6 +223,10 @@ components:
 
     Feedback:
       allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/FeedbackId"
         - $ref: "#/components/schemas/FeedbackBase"
         - type: object
           properties:
@@ -282,6 +286,10 @@ components:
 
     Workout:
       allOf:
+        - type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/WorkoutId"
         - $ref: "#/components/schemas/WorkoutBase"
         - type: object
           properties:
@@ -376,15 +384,21 @@ components:
     WorkoutReadRequestPayload:
       type: object
       properties:
-        id:
-          $ref: "#/components/schemas/WorkoutId"
+        workout:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/WorkoutId"
 
     WorkoutUpdateRequestPayload:
       type: object
       properties:
         workout:
           allOf:
-            - $ref: "#/components/schemas/WorkoutId"
+            - type: object
+              properties:
+                id:
+                  $ref: "#/components/schemas/WorkoutId"
             - $ref: "#/components/schemas/Workout"
 
     FeedbackCreateRequestPayload:
@@ -551,7 +565,10 @@ components:
       allOf:
         - $ref: "#/components/schemas/Request"
         - $ref: "#/components/schemas/RequestDebug"
-        - $ref: "#/components/schemas/FeedbackReadRequestPayload"
+        - type: object
+          properties:
+            feedback:
+              $ref: "#/components/schemas/FeedbackReadRequestPayload"
 
     FeedbackUpdateRequest:
       allOf:
@@ -667,6 +684,5 @@ components:
         - badId
         - badTitle
         - badDescription
-        - badVisibility
         - cannotDelete
-        - badSearchString
+        - emptySearch

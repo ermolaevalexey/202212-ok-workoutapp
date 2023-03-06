@@ -1,5 +1,5 @@
 package models
 
-data class WktWorkoutSearch (
-  var groupBy: MutableList<WktWorkoutSearchGroupBy> = mutableListOf()
+data class WktWorkoutSearch(
+  var groupBy: List<WktWorkoutSearchGroupBy> = mutableListOf()
 )

@@ -6,5 +6,11 @@ enum class WktEquipment(s: String) {
   DUMBBELLS("Dumbbells"),
   JUMPING_ROPE("JumpingRope"),
   HORIZONTAL_BAR("HorizontalBar"),
-  BARS("Bars"),
+  BARS("Bars");
+
+  companion object {
+    fun byNameIgnoreCaseOrNull(input: String?): WktEquipment? {
+      return WktEquipment.values().firstOrNull { it.name.equals(input, true) }
+    }
+  }
 }

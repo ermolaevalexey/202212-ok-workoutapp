@@ -7,6 +7,6 @@ data class WktWorkout (
   var type: WktWorkoutType = WktWorkoutType.NONE,
   var equipment: WktEquipment = WktEquipment.NONE,
   var content: WktWorkoutContent = WktWorkoutContent(),
-  var feedback: WktFeedback = WktFeedback(),
+  var feedback: MutableList<WktFeedback> = mutableListOf(),
   var rating: Double = 0.0
 )

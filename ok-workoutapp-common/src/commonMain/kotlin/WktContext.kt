@@ -12,9 +12,20 @@ data class WktContext(
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
 
+  var workoutCreateRequest: WktWorkout = WktWorkout(),
   var workoutReadRequest: WktWorkoutId = WktWorkoutId.NONE,
-  var workoutReadResponse: WktWorkout = WktWorkout(),
+  var workoutUpdateRequest: WktWorkout = WktWorkout(),
   var workoutSearchRequest: WktWorkoutSearch = WktWorkoutSearch(),
-  var workoutSearchResponse: MutableList<WktWorkoutSearchResult> = mutableListOf(),
-
+  var feedbackCreateRequest: WktFeedbackPayload = WktFeedbackPayload(),
+  var feedbackUpdateRequest: WktFeedbackPayload = WktFeedbackPayload(),
+  var feedbackReadRequest: WktWorkout = WktWorkout(),
+  var feedbackDeleteRequest: WktFeedbackPayload = WktFeedbackPayload(),
+  var workoutCreateResponse: WktWorkout = WktWorkout(),
+  var workoutUpdateResponse: WktWorkout = WktWorkout(),
+  var workoutReadResponse: WktWorkout = WktWorkout(),
+  var workoutSearchResponse: WktWorkoutSearchPayload = WktWorkoutSearchPayload(),
+  var feedbackCreateResponse: WktFeedback = WktFeedback(),
+  var feedbackReadResponse: MutableList<WktFeedback> = mutableListOf(),
+  var feedbackUpdateResponse: WktFeedback = WktFeedback(),
+  var feedbackDeleteResponse: WktFeedbackPayload = WktFeedbackPayload()
 )

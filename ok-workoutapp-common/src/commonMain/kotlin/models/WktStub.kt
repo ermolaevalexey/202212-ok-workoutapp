@@ -9,4 +9,5 @@ enum class WktStub {
   BAD_DESCRIPTION,
   CANNOT_DELETE,
   EMPTY_SEARCH,
+
 }
