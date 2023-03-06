@@ -1,4 +1,4 @@
-package models
+package stubs
 
 enum class WktStub {
   NONE,

@@ -18,19 +18,19 @@ fun WktContext.toTransportFeedbackCreate() = FeedbackCreateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
   result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
-  feedback = this.feedbackCreateResponse.toTransportFeedback() as FeedbackCreateResponsePayload
+  feedback = this.feedbackCreateResponse.toTransportFeedback()
 )
 fun WktContext.toTransportFeedbackRead() = FeedbackReadResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
   result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
-  feedback = this.feedbackReadResponse.map { it.toTransportFeedback() } as FeedbackReadResponsePayload
+  feedback = this.feedbackReadResponse.map { it.toTransportFeedback() }
 )
 fun WktContext.toTransportFeedbackUpdate() = FeedbackUpdateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
   result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
-  feedback = this.feedbackUpdateResponse.toTransportFeedback() as FeedbackUpdateResponsePayload
+  feedback = this.feedbackUpdateResponse.toTransportFeedback()
 )
 fun WktContext.toTransportFeedbackDelete() = FeedbackDeleteResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
@@ -48,19 +48,19 @@ fun WktContext.toTransportWorkoutCreate() = WorkoutCreateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
   result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
-  workout = this.workoutCreateResponse.toTransportWorkout() as WorkoutCreateResponsePayload
+  workout = this.workoutCreateResponse.toTransportWorkout()
 )
 fun WktContext.toTransportWorkoutRead() = WorkoutReadResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
   result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
-  workout = this.workoutReadResponse.toTransportWorkout() as WorkoutReadResponsePayload
+  workout = this.workoutReadResponse.toTransportWorkout()
 )
 fun WktContext.toTransportWorkoutUpdate() = WorkoutUpdateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
   result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
-  workout = this.workoutUpdateResponse.toTransportWorkout() as WorkoutUpdateResponsePayload
+  workout = this.workoutUpdateResponse.toTransportWorkout()
 )
 
 private fun WktWorkout.toTransportWorkout() = Workout(
@@ -122,7 +122,7 @@ private fun WktWorkoutSearchPayload.toTransport() = WorkoutSearchResponsePayload
 )
 private fun WktWorkoutSearchResult.toTransport() = WorkoutSearchResponsePayloadGroupsInner(
   groupName = this.groupName,
-  workouts = this.workouts.map { it.toTransportWorkout() } as List<WorkoutCreateResponsePayload>
+  workouts = this.workouts.map { it.toTransportWorkout() }
 )
 
 private fun List<WktError>.toTransportErrors(): List<Error>? = this

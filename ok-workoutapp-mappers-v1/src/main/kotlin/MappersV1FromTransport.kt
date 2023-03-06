@@ -1,6 +1,7 @@
 import exceptions.UnknownRequestClass
 import models.*
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
+import stubs.WktStub
 
 fun WktContext.fromTransport(request: Request) = when (request) {
   is WorkoutCreateRequest -> fromTransport(request)

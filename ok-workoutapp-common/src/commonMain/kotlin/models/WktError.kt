@@ -1,6 +1,6 @@
 package models
 
-enum class WktError (
+data class WktError (
   val code: String = "",
   val group: String = "",
   val field: String = "",
