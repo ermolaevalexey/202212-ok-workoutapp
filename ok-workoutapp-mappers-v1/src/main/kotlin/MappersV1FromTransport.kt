@@ -137,12 +137,14 @@ private fun WorkoutSearchGroupBy?.fromTransport() = when (this) {
 }
 
 private fun FeedbackCreateRequestPayload?.toInternal() = WktFeedbackPayload(
+  workout = this?.workout.toWktWorkoutId(),
   review = this?.review ?: "",
   rating = this?.rating ?: 0.0,
   user = this?.user.toWktUserId()
 )
 
 private fun FeedbackUpdateRequestPayload?.toInternal() = WktFeedbackPayload(
+  id = this?.id.toWktFeedbackId(),
   review = this?.review ?: "",
   rating = this?.rating ?: 0.0,
   user = this?.user.toWktUserId()
