@@ -6,7 +6,7 @@ import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
 class ResponseSerializationTest {
-  private val workout1 = WorkoutCreateResponsePayload(
+  private val workout1 = Workout(
     id = "567",
     title = "Workout with Dumbbells",
     description = "Simple test workout",
@@ -29,7 +29,7 @@ class ResponseSerializationTest {
     feedback = emptyList()
   )
 
-  private val workout2 = WorkoutCreateResponsePayload(
+  private val workout2 = Workout(
     id = "567",
     title = "Workout with Bars",
     description = "Simple test bars",
