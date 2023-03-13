@@ -1,4 +1,4 @@
-package models
+package ru.otus.otuskotlin.workoutapp.common.models
 
 enum class WktCommand {
   NONE,

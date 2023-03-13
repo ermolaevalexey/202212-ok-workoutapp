@@ -1,4 +1,4 @@
-package stubs
+package ru.otus.otuskotlin.workoutapp.common.stubs
 
 enum class WktStub {
   NONE,

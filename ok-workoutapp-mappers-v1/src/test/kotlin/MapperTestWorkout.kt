@@ -1,14 +1,15 @@
 package ru.otus.otuskotlin.workoutapp.mappers.v1
 
-import WktContext
+import WktWorkoutContext
 import fromTransport
-import models.*
+import ru.otus.otuskotlin.workoutapp.common.models.*
 import org.junit.Test
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
-import stubs.WktStub
+import ru.otus.otuskotlin.workoutapp.workout.common.models.*
+import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 import toTransport
 import kotlin.test.assertEquals
-class MapperTest {
+class MapperTestWorkout {
 
   private val responseWorkout = WktWorkout(
     id = WktWorkoutId("128"),
@@ -49,7 +50,7 @@ class MapperTest {
       )
     )
 
-    val context = WktContext()
+    val context = WktWorkoutContext()
     context.fromTransport(req)
 
     assertEquals(WktStub.SUCCESS, context.stubCase)
@@ -61,7 +62,7 @@ class MapperTest {
 
   @Test
   fun toTransport() {
-    val context = WktContext(
+    val context = WktWorkoutContext(
       requestId = WktRequestId("1234"),
       command = WktCommand.WORKOUT_READ,
       workoutReadResponse = responseWorkout,

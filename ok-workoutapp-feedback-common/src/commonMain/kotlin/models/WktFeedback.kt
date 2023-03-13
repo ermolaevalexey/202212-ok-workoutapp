@@ -1,4 +1,5 @@
-package models
+package ru.otus.otuskotlin.workoutapp.feedback.common.models
+import ru.otus.otuskotlin.workoutapp.common.models.*
 
 data class WktFeedback(
   var id: WktFeedbackId = WktFeedbackId.NONE,
