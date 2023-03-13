@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.mappers.v1.exceptions
+package ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions
 
 import models.WktCommand
 

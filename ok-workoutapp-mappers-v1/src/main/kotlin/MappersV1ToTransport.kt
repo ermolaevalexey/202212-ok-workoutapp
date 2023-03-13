@@ -1,5 +1,5 @@
 import models.*
-import ru.otus.otuskotlin.marketplace.mappers.v1.exceptions.UnknownWktCommand
+import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownWktCommand
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 
 fun WktContext.toTransport(): Response = when (val cmd = command) {
