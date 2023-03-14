@@ -1,4 +1,7 @@
+package ru.otus.otuskotlin.workoutapp.workout.common
+
 import kotlinx.datetime.Instant
+import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub

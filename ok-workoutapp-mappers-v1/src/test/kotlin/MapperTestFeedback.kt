@@ -1,14 +1,12 @@
 package ru.otus.otuskotlin.workoutapp.mappers.v1
 
 import WktFeedbackContext
-import fromTransport
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import org.junit.Test
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackUser
-import toTransport
 import kotlin.test.assertEquals
 class MapperTestFeedback {
 
@@ -68,6 +66,7 @@ class MapperTestFeedback {
     val res = context.toTransport() as FeedbackReadResponse
 
     assertEquals("1234", res.requestId)
+    assertEquals(responseFeedback.workout?.asString(), res.feedback?.get(0)?.workout)
     assertEquals(responseFeedback.review, res.feedback?.get(0)?.review)
     assertEquals(responseFeedback.user?.name, res.feedback?.get(0)?.user?.name)
     assertEquals(1, res.errors?.size)

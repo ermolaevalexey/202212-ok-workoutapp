@@ -1,8 +1,11 @@
+package ru.otus.otuskotlin.workoutapp.mappers.v1
+
 import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownRequestClass
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
+import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
 fun WktWorkoutContext.fromTransport(request: Request) = when (request) {
   is WorkoutCreateRequest -> fromTransport(request)

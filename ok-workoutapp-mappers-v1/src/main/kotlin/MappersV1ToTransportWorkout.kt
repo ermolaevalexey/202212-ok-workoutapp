@@ -1,7 +1,10 @@
+package ru.otus.otuskotlin.workoutapp.mappers.v1
+
 import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownWktCommand
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktState
+import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 
 fun WktWorkoutContext.toTransport(): Response = when (val cmd = command) {
@@ -39,7 +42,7 @@ fun WktWorkoutContext.toTransportWorkoutUpdate() = WorkoutUpdateResponse(
 )
 
 private fun WktWorkout.toTransportWorkout() = Workout(
-  id = this.id.toString(),
+  id = this.id.toTransport(),
   title = this.title,
   description = this.description,
   type = this.type.toTransport(),
