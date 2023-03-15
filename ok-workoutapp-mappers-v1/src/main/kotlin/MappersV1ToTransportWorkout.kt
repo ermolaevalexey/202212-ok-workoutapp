@@ -18,25 +18,25 @@ fun WktWorkoutContext.toTransport(): Response = when (val cmd = command) {
 
 fun WktWorkoutContext.toTransportWorkoutSearch() = WorkoutSearchResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutSearchResponse.toTransport()
 )
 fun WktWorkoutContext.toTransportWorkoutCreate() = WorkoutCreateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutCreateResponse.toTransportWorkout()
 )
 fun WktWorkoutContext.toTransportWorkoutRead() = WorkoutReadResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutReadResponse.toTransportWorkout()
 )
 fun WktWorkoutContext.toTransportWorkoutUpdate() = WorkoutUpdateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutUpdateResponse.toTransportWorkout()
 )

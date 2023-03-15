@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 class RequestSerializationTest {
   private val createRequest = WorkoutCreateRequest(
     requestId = "123",
+    requestType = "workoutCreate",
     debug = Debug(
       mode = RequestDebugMode.TEST,
       stub = RequestDebugStubs.BAD_TITLE
@@ -34,6 +35,7 @@ class RequestSerializationTest {
 
   private val searchRequest = WorkoutSearchRequest(
     requestId = "128",
+    requestType = "workoutSearch",
     debug = Debug(
       mode = RequestDebugMode.TEST,
       stub = RequestDebugStubs.BAD_TITLE
@@ -63,15 +65,14 @@ class RequestSerializationTest {
     assertContains(json, Regex("\"mode\":\"test\""))
     assertContains(json, Regex("\"stub\":\"badTitle\""))
     assertContains(json, Regex("\"requestType\":\\s*\"workoutSearch\""))
-    assertContains(json, Regex("\"workoutType\":\\s*false"))
-    assertContains(json, Regex("\"equipment\":\\s*true"))
+    assertContains(json, Regex("\"groupBy\":\\s*\\[\"equipment\",\"workoutType\"\\]"))
   }
 
   @Test
   fun deserializeCreateRequest() {
     val json = apiV1Mapper.writeValueAsString(createRequest)
     val obj = apiV1Mapper.readValue(json, Request::class.java) as WorkoutCreateRequest
-
+    println(createRequest)
     assertEquals(createRequest, obj)
   }
 

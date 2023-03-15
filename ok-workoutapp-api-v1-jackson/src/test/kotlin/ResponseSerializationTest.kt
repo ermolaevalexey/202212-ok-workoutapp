@@ -66,6 +66,7 @@ class ResponseSerializationTest {
 
   private val createResponse = WorkoutCreateResponse(
     requestId = "123",
+    responseType = "workoutCreate",
     result = Result.SUCCESS,
     errors = emptyList<Error>(),
     workout = workout1
@@ -73,6 +74,7 @@ class ResponseSerializationTest {
 
   private val searchResponse = WorkoutSearchResponse(
     requestId = "128",
+    responseType = "workoutSearch",
     result = Result.SUCCESS,
     workout = WorkoutSearchResponsePayload(
       groups = listOf(
