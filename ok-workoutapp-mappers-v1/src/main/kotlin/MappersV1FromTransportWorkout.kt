@@ -72,6 +72,7 @@ private fun WorkoutBase?.toInternal() = WktWorkout(
 
 private fun WorkoutUpdateRequestPayloadWorkout?.toInternal() = WktWorkout(
   id = this?.id.toWktWorkoutId(),
+  title = this?.title ?: "",
   description = this?.description ?: "",
   type = this?.type?.fromTransport() ?: WktWorkoutType.NONE,
   equipment = this?.equipment?.fromTransport() ?: WktEquipment.NONE,

@@ -66,7 +66,7 @@ class MapperTestFeedback {
     val res = context.toTransport() as FeedbackReadResponse
 
     assertEquals("1234", res.requestId)
-    assertEquals(responseFeedback.workout?.asString(), res.feedback?.get(0)?.workout)
+    assertEquals(responseFeedback.workout.asString(), res.feedback?.get(0)?.workout)
     assertEquals(responseFeedback.review, res.feedback?.get(0)?.review)
     assertEquals(responseFeedback.user?.name, res.feedback?.get(0)?.user?.name)
     assertEquals(1, res.errors?.size)

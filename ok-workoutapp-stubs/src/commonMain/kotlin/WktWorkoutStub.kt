@@ -7,7 +7,6 @@ import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 object WktWorkoutStub {
   fun get(): WktWorkout = WKT_WORKOUT.copy()
 
-
   fun prepareSearchPayload(): WktWorkoutSearchPayload {
     return WktWorkoutSearchPayload(
       groups = mutableListOf(
@@ -47,8 +46,12 @@ object WktWorkoutStub {
     )
   }
 
+  fun prepareCreateWorkoutPayload(id: String, base: WktWorkout): WktWorkout = base.copy(
+    id = WktWorkoutId(id)
+  )
 
-  fun prepareSearchListByType(type: WktWorkoutType): List<WktWorkout> = listOf(
+
+  private fun prepareSearchListByType(type: WktWorkoutType): List<WktWorkout> = listOf(
     wktWorkout(WKT_WORKOUT, id = "755", type = type, equipment = WktEquipment.OWN_WEIGHT),
     wktWorkout(WKT_WORKOUT, id = "783", type = type, equipment = WktEquipment.DUMBBELLS),
     wktWorkout(WKT_WORKOUT, id = "783", type = type, equipment = WktEquipment.BARS),
@@ -57,7 +60,7 @@ object WktWorkoutStub {
     wktWorkout(WKT_WORKOUT, id = "233", type = type, equipment = WktEquipment.OWN_WEIGHT),
   )
 
-  fun prepareSearchListByEquipment(equipment: WktEquipment): List<WktWorkout> = listOf(
+  private fun prepareSearchListByEquipment(equipment: WktEquipment): List<WktWorkout> = listOf(
     wktWorkout(WKT_WORKOUT, id = "755", type = WktWorkoutType.ARMS, equipment = equipment),
     wktWorkout(WKT_WORKOUT, id = "783", type = WktWorkoutType.LEGS, equipment = equipment),
     wktWorkout(WKT_WORKOUT, id = "783", type = WktWorkoutType.CORE, equipment = equipment),

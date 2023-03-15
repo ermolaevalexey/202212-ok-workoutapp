@@ -13,39 +13,41 @@ fun Application.configureRouting() {
       call.respondText("Hello KTOR WorkoutApp!")
     }
 
-    route("workouts") {
-      post ("read") {
-        call.readWorkout()
+    route("v1") {
+      route("workouts") {
+        post ("read") {
+          call.readWorkout()
+        }
+
+        post ("search") {
+          call.searchWorkouts()
+        }
+
+        post ("create") {
+          call.createWorkout()
+        }
+
+        post ("update") {
+          call.updateWorkout()
+        }
       }
 
-      post ("search") {
-        call.searchWorkouts()
-      }
+      route("feedback") {
+        post ("read") {
+          call.readFeedback()
+        }
 
-      post ("create") {
-        call.createWorkout()
-      }
+        post ("create") {
+          call.createFeedback()
+        }
 
-      post ("update") {
-        call.updateWorkout()
-      }
-    }
+        post ("update") {
+          call.updateFeedback()
+        }
 
-    route("feedback") {
-      post ("read") {
-        call.readFeedback()
-      }
-
-      post ("create") {
-        call.createFeedback()
-      }
-
-      post ("update") {
-        call.updateFeedback()
-      }
-
-      post ("delete") {
-        call.deleteFeedback()
+        post ("delete") {
+          call.deleteFeedback()
+        }
       }
     }
   }
