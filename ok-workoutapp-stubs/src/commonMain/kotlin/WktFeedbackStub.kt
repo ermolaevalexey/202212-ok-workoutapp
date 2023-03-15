@@ -29,18 +29,29 @@ object WktFeedbackStub {
     prepareFeedback("2445", workoutId, "user567", 3.3)
   )
 
-  fun prepareDeleteFeedback(workoutId: String, userId: String?): WktFeedbackPayload = WktFeedbackPayload(
+  fun prepareCreateFeedback(id: String, workoutId: String, userId: String?, rating: Double, review: String): WktFeedback = prepareFeedback(
+    id, workoutId, userId, rating
+  ).copy(review = review)
+
+
+  fun prepareUpdateFeedback(review: String?, rating: Double?): WktFeedback = WKT_FEEDBACK.copy(
+    review = review ?: WKT_FEEDBACK.review,
+    rating = rating ?: WKT_FEEDBACK.rating
+  )
+
+  fun prepareDeleteFeedback(workoutId: String, userId: String?, feedbackId: String): WktFeedbackPayload = WktFeedbackPayload(
+    id = WktFeedbackId(feedbackId),
     workout = WktWorkoutId(workoutId),
     user = if (userId is String) WktUserId(userId) else WktUserId.NONE
   )
 
-  private fun prepareFeedback(id: String, workoutId: String, userId: String, rating: Double): WktFeedback = WKT_FEEDBACK.copy(
+  private fun prepareFeedback(id: String, workoutId: String, userId: String?, rating: Double): WktFeedback = WKT_FEEDBACK.copy(
     id = WktFeedbackId(id),
     workout = WktWorkoutId(workoutId),
     review = "Review $id $workoutId $userId",
     user = WktFeedbackUser(
       name = "User $userId",
-      id = WktUserId(userId)
+      id = if (userId is String) WktUserId(userId) else WktUserId.NONE
     ),
     rating = rating
   )

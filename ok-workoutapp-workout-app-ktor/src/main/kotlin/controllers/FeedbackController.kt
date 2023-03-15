@@ -15,6 +15,13 @@ suspend fun ApplicationCall.createFeedback() {
   val request = receive<FeedbackCreateRequest>()
   val ctx = WktFeedbackContext()
   ctx.fromTransport(request)
+  ctx.feedbackCreateResponse = WktFeedbackStub.prepareCreateFeedback(
+    id = "777",
+    workoutId = ctx.feedbackCreateRequest.workout.asString(),
+    userId = ctx.feedbackCreateRequest.user?.asString(),
+    review = ctx.feedbackCreateRequest.review,
+    rating = ctx.feedbackCreateRequest.rating
+  )
   ctx.state = WktState.RUNNING
   respond(ctx.toTransport())
 }
@@ -32,6 +39,10 @@ suspend fun ApplicationCall.updateFeedback() {
   val request = receive<FeedbackUpdateRequest>()
   val ctx = WktFeedbackContext()
   ctx.fromTransport(request)
+  ctx.feedbackUpdateResponse = WktFeedbackStub.prepareUpdateFeedback(
+    review = ctx.feedbackUpdateRequest.review,
+    rating = ctx.feedbackUpdateRequest.rating
+  )
   ctx.state = WktState.RUNNING
   respond(ctx.toTransport())
 }
@@ -41,8 +52,9 @@ suspend fun ApplicationCall.deleteFeedback() {
   val ctx = WktFeedbackContext()
   ctx.fromTransport(request)
   ctx.feedbackDeleteResponse = WktFeedbackStub.prepareDeleteFeedback(
-    ctx.feedbackDeleteRequest.id.asString(),
-    ctx.feedbackDeleteRequest.user?.asString()
+    workoutId = WktFeedbackStub.WKT_FEEDBACK.workout.asString(),
+    userId = ctx.feedbackDeleteRequest.user?.asString(),
+    feedbackId = WktFeedbackStub.WKT_FEEDBACK.id.asString()
   )
   ctx.state = WktState.RUNNING
   respond(ctx.toTransport())
