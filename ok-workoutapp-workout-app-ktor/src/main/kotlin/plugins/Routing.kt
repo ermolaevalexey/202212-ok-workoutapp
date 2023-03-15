@@ -17,6 +17,36 @@ fun Application.configureRouting() {
       post ("read") {
         call.readWorkout()
       }
+
+      post ("search") {
+        call.searchWorkouts()
+      }
+
+      post ("create") {
+        call.createWorkout()
+      }
+
+      post ("update") {
+        call.updateWorkout()
+      }
+    }
+
+    route("feedback") {
+      post ("read") {
+        call.readFeedback()
+      }
+
+      post ("create") {
+        call.createFeedback()
+      }
+
+      post ("update") {
+        call.updateFeedback()
+      }
+
+      post ("delete") {
+        call.deleteFeedback()
+      }
     }
   }
 }
