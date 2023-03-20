@@ -1,7 +1,10 @@
+package ru.otus.otuskotlin.workoutapp.mappers.v1
+
 import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownWktCommand
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktState
+import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 
 fun WktWorkoutContext.toTransport(): Response = when (val cmd = command) {
@@ -15,31 +18,31 @@ fun WktWorkoutContext.toTransport(): Response = when (val cmd = command) {
 
 fun WktWorkoutContext.toTransportWorkoutSearch() = WorkoutSearchResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutSearchResponse.toTransport()
 )
 fun WktWorkoutContext.toTransportWorkoutCreate() = WorkoutCreateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutCreateResponse.toTransportWorkout()
 )
 fun WktWorkoutContext.toTransportWorkoutRead() = WorkoutReadResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutReadResponse.toTransportWorkout()
 )
 fun WktWorkoutContext.toTransportWorkoutUpdate() = WorkoutUpdateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   workout = this.workoutUpdateResponse.toTransportWorkout()
 )
 
 private fun WktWorkout.toTransportWorkout() = Workout(
-  id = this.id.toString(),
+  id = this.id.toTransport(),
   title = this.title,
   description = this.description,
   type = this.type.toTransport(),

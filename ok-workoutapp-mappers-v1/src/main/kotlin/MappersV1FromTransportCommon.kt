@@ -1,3 +1,5 @@
+package ru.otus.otuskotlin.workoutapp.mappers.v1
+
 import ru.otus.otuskotlin.workoutapp.api.v1.models.Debug
 import ru.otus.otuskotlin.workoutapp.api.v1.models.Request
 import ru.otus.otuskotlin.workoutapp.api.v1.models.RequestDebugMode
@@ -9,6 +11,7 @@ fun Request?.requestId() = this?.requestId?.let { WktRequestId(it) } ?: WktReque
 fun String?.toWktWorkoutId() = this?.let { WktWorkoutId(it) } ?: WktWorkoutId.NONE
 fun String?.toWktUserId() = this?.let { WktUserId(it) } ?: WktUserId.NONE
 fun String?.toWktFeedbackId() = this?.let { WktFeedbackId(it) } ?: WktFeedbackId.NONE
+
 fun Debug?.fromTransportToWorkMode() = when (this?.mode) {
   RequestDebugMode.PROD -> WktWorkMode.PROD
   RequestDebugMode.TEST -> WktWorkMode.TEST

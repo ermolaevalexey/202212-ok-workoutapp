@@ -1,15 +1,18 @@
+package ru.otus.otuskotlin.workoutapp.mappers.v1
+
 import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownRequestClass
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
+import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
 fun WktWorkoutContext.fromTransport(request: Request) = when (request) {
   is WorkoutCreateRequest -> fromTransport(request)
   is WorkoutReadRequest -> fromTransport(request)
   is WorkoutUpdateRequest -> fromTransport(request)
   is WorkoutSearchRequest -> fromTransport(request)
-  else -> throw UnknownRequestClass(request::class.java)
+  else -> throw UnknownRequestClass(request.javaClass)
 }
 
 fun WorkoutType.fromTransport() = when (this) {
@@ -54,7 +57,7 @@ fun WktWorkoutContext.fromTransport(request: WorkoutUpdateRequest) {
 fun WktWorkoutContext.fromTransport(request: WorkoutSearchRequest) {
   command = WktCommand.WORKOUT_SEARCH
   requestId = request.requestId()
-  workoutSearchRequest = request.params.toInternal() ?: WktWorkoutSearch()
+  workoutSearchRequest = request.params.toInternal()
   workMode = request.debug?.fromTransportToWorkMode() ?: WktWorkMode.NONE
   stubCase = request.debug?.fromTransportToStubCase() ?: WktStub.NONE
 }
@@ -69,6 +72,7 @@ private fun WorkoutBase?.toInternal() = WktWorkout(
 
 private fun WorkoutUpdateRequestPayloadWorkout?.toInternal() = WktWorkout(
   id = this?.id.toWktWorkoutId(),
+  title = this?.title ?: "",
   description = this?.description ?: "",
   type = this?.type?.fromTransport() ?: WktWorkoutType.NONE,
   equipment = this?.equipment?.fromTransport() ?: WktEquipment.NONE,

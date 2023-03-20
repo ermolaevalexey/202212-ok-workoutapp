@@ -1,3 +1,6 @@
+package ru.otus.otuskotlin.workoutapp.mappers.v1
+
+import WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktState
@@ -15,41 +18,43 @@ fun WktFeedbackContext.toTransport(): Response = when (val cmd = command) {
 }
 fun WktFeedbackContext.toTransportFeedbackCreate() = FeedbackCreateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   feedback = this.feedbackCreateResponse.toTransportFeedback()
 )
 fun WktFeedbackContext.toTransportFeedbackRead() = FeedbackReadResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   feedback = this.feedbackReadResponse.map { it.toTransportFeedback() }
 )
 fun WktFeedbackContext.toTransportFeedbackUpdate() = FeedbackUpdateResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   feedback = this.feedbackUpdateResponse.toTransportFeedback()
 )
 fun WktFeedbackContext.toTransportFeedbackDelete() = FeedbackDeleteResponse(
   requestId = this.requestId.asString().takeIf { it.isNotBlank() },
-  result = if (state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
+  result = if (this.state == WktState.RUNNING) Result.SUCCESS else Result.ERROR,
   errors = errors.toTransportErrors(),
   feedback = this.feedbackDeleteResponse.toTransport()
 )
 
 private fun WktFeedback.toTransportFeedback() = Feedback(
-  id = this.id.toString(),
+  id = this.id.toTransport(),
+  workout = this.workout.toTransport(),
   review = this.review,
   rating = this.rating,
   user = this.user?.toTransport()
 )
 
 private fun WktFeedbackUser.toTransport() = FeedbackUser(
-  id = this.id.toString(),
+  id = this.id.toTransport(),
   name = this.name
 )
 
 private fun WktFeedbackPayload.toTransport() = FeedbackDeleteResponsePayload(
-  id = this.id.toString(),
+  id = this.id.toTransport(),
+  workout = this.workout.toTransport()
 )
