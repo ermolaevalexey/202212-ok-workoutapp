@@ -45,18 +45,14 @@ dependencies {
   implementation(project(":ok-workoutapp-common"))
   implementation(project(":ok-workoutapp-workout-common"))
   implementation(project(":ok-workoutapp-feedback-common"))
-  implementation(project(":ok-workoutapp-stubs"))
 
-  //Serialization
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:$serializationVersion")
-  implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+  //stubs
+  implementation(project(":ok-workoutapp-stubs"))
 
   implementation(ktor("jackson", "serialization"))
   implementation(kotlin("test-junit"))
   implementation(ktor("test-host")) // "io.ktor:ktor-server-test-host:$ktorVersion"
   implementation(ktor("content-negotiation", prefix = "client-"))
-  //stubs
-  //implementation(project(":askexchange_stubs"))
 
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")

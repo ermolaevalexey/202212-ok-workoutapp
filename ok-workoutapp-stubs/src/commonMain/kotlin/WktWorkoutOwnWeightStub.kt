@@ -1,6 +1,7 @@
 package ru.otus.otuskotlin.workoutapp.stubs
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
+
 object WktWorkoutOwnWeightStub {
   val WKT_WORKOUT: WktWorkout
     get() = WktWorkout(

@@ -36,12 +36,13 @@ suspend fun ApplicationCall.updateWorkout() {
   val request = receive<WorkoutUpdateRequest>()
   val ctx = WktWorkoutContext()
   ctx.fromTransport(request)
-  println(ctx.workoutUpdateRequest)
+
   ctx.workoutUpdateResponse = WktWorkoutStub.get().copy(
     title = ctx.workoutUpdateRequest.title.takeIf { it.isNotBlank() } ?: WktWorkoutStub.get().title,
     description = ctx.workoutUpdateRequest.description.takeIf { it.isNotBlank() } ?: WktWorkoutStub.get().description,
     content = ctx.workoutUpdateRequest.content.takeIf { it.video.isNotEmpty() || !it.steps.isNullOrEmpty() } ?: WktWorkoutStub.get().content
   )
+
   ctx.state = WktState.RUNNING
   respond(ctx.toTransport())
 }
