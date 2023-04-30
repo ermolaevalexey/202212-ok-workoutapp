@@ -1,5 +1,6 @@
 package ok.workoutapp.workout.app.ktor.plugins
 
+import java.time.Duration
 import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.http.content.*
 import io.ktor.http.*
@@ -8,6 +9,7 @@ import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.websocket.*
 import ru.otus.otuskotlin.workoutapp.api.v1.apiV1Mapper
 
 fun Application.configureHTTP() {
@@ -31,5 +33,9 @@ fun Application.configureHTTP() {
     allowHeader(HttpHeaders.Authorization)
     allowHeader("MyCustomHeader")
     anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
+  }
+
+  install(WebSockets) {
+    pingPeriod = Duration.ofSeconds(5)
   }
 }

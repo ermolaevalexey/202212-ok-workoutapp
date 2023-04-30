@@ -3,10 +3,11 @@ import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.*
+
 data class WktFeedbackContext(
-  var command: WktCommand = WktCommand.NONE,
-  var state: WktState = WktState.NONE,
-  var errors: MutableList<WktError> = mutableListOf(),
+  override var command: WktCommand = WktCommand.NONE,
+  override var state: WktState = WktState.NONE,
+  override var errors: MutableList<WktError> = mutableListOf(),
 
   var workMode: WktWorkMode = WktWorkMode.PROD,
   var stubCase: WktStub = WktStub.NONE,
@@ -23,4 +24,4 @@ data class WktFeedbackContext(
   var feedbackReadResponse: MutableList<WktFeedback> = mutableListOf(),
   var feedbackUpdateResponse: WktFeedback = WktFeedback(),
   var feedbackDeleteResponse: WktFeedbackPayload = WktFeedbackPayload()
-)
+): WktContext

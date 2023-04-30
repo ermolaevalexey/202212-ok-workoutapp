@@ -7,9 +7,9 @@ import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 
 data class WktWorkoutContext(
-  var command: WktCommand = WktCommand.NONE,
-  var state: WktState = WktState.NONE,
-  var errors: MutableList<WktError> = mutableListOf(),
+  override var command: WktCommand = WktCommand.NONE,
+  override var state: WktState = WktState.NONE,
+  override var errors: MutableList<WktError> = mutableListOf(),
 
   var workMode: WktWorkMode = WktWorkMode.PROD,
   var stubCase: WktStub = WktStub.NONE,
@@ -26,4 +26,4 @@ data class WktWorkoutContext(
   var workoutUpdateResponse: WktWorkout = WktWorkout(),
   var workoutReadResponse: WktWorkout = WktWorkout(),
   var workoutSearchResponse: WktWorkoutSearchPayload = WktWorkoutSearchPayload(),
-)
+) : WktContext
