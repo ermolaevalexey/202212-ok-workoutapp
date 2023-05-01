@@ -1,0 +1,4 @@
+WEBSOCKET ws://localhost:8080/ws/ping
+Content-Type text/plain
+
+Alex
