@@ -35,7 +35,7 @@ fun Application.configureHTTP() {
     anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
   }
 
-  install(WebSockets) {
-    pingPeriod = Duration.ofSeconds(5)
-  }
+//  install(WebSockets) {
+//    pingPeriod = Duration.ofSeconds(5)
+//  }
 }

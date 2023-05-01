@@ -53,10 +53,12 @@ dependencies {
   implementation(kotlin("test-junit"))
   implementation(ktor("test-host")) // "io.ktor:ktor-server-test-host:$ktorVersion"
   implementation(ktor("content-negotiation", prefix = "client-"))
-  implementation(ktor("websockets")) // "io.ktor:ktor-server-websockets:$ktorVersion"
+  implementation("io.ktor:ktor-server-websockets")
+  // implementation(ktor("websockets")) // "io.ktor:ktor-server-websockets:$ktorVersion"
 
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")
   testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
   testImplementation(ktor("content-negotiation", prefix = "client-"))
-  testImplementation(ktor("websockets", prefix = "client-"))
+  testImplementation("io.ktor:ktor-client-websockets")
+  // testImplementation(ktor("websockets", prefix = "client-"))
 }

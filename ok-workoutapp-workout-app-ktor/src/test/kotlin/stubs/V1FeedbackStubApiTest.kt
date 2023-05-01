@@ -7,13 +7,18 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.jackson.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.server.application.*
 import io.ktor.server.testing.*
+import io.ktor.server.websocket.*
 import ok.workoutapp.workout.app.ktor.plugins.configureHTTP
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ok.workoutapp.workout.app.ktor.plugins.configureRouting
 import ok.workoutapp.workout.app.ktor.plugins.configureSerialization
 import org.junit.Test
 import ru.otus.otuskotlin.workoutapp.api.v1.apiV1Mapper
+import java.time.Duration
 import kotlin.test.assertEquals
 
 class V1FeedbackStubApiTest {
@@ -21,7 +26,9 @@ class V1FeedbackStubApiTest {
   fun create() = testApplication {
     application {
       configureRouting()
-      configureHTTP()
+//      configureHTTP() {
+//        install(WebSockets)
+//      }
       configureSerialization()
     }
 
@@ -130,6 +137,7 @@ class V1FeedbackStubApiTest {
         writerWithDefaultPrettyPrinter()
       }
     }
+    install(WebSockets)
   }
 
 }
