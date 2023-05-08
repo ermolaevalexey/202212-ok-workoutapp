@@ -50,7 +50,6 @@ object WktWorkoutStub {
     id = WktWorkoutId(id)
   )
 
-
   private fun prepareSearchListByType(type: WktWorkoutType): List<WktWorkout> = listOf(
     wktWorkout(WKT_WORKOUT, id = "755", type = type, equipment = WktEquipment.OWN_WEIGHT),
     wktWorkout(WKT_WORKOUT, id = "783", type = type, equipment = WktEquipment.DUMBBELLS),
