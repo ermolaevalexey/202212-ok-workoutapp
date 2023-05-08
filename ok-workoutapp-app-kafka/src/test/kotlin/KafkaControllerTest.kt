@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.app.kafka
+package ru.otus.otuskotlin.workoutapp.app.kafka
 
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.apache.kafka.clients.consumer.MockConsumer

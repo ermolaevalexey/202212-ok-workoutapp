@@ -13,7 +13,7 @@ plugins {
 }
 
 application {
-  mainClass.set("ru.otus.otuskotlin.marketplace.app.kafka.MainKt")
+  mainClass.set("ru.otus.otuskotlin.workoutapp.app.kafka.MainKt")
 }
 
 docker {
