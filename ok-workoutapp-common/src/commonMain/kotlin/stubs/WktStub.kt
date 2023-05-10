@@ -7,7 +7,7 @@ enum class WktStub {
   BAD_ID,
   BAD_TITLE,
   BAD_DESCRIPTION,
+  EMPTY_REVIEW,
   CANNOT_DELETE,
   EMPTY_SEARCH,
-
 }

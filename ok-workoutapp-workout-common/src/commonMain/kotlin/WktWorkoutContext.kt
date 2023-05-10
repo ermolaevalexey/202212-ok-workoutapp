@@ -12,10 +12,13 @@ data class WktWorkoutContext(
   override var errors: MutableList<WktError> = mutableListOf(),
 
   var workMode: WktWorkMode = WktWorkMode.PROD,
-  var stubCase: WktStub = WktStub.NONE,
+  override var stubCase: WktStub = WktStub.NONE,
 
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
+
+  var workoutValidity: WktWorkout = WktWorkout(),
+  var workoutValid: WktWorkout = WktWorkout(),
 
   var workoutCreateRequest: WktWorkout = WktWorkout(),
   var workoutReadRequest: WktWorkoutId = WktWorkoutId.NONE,
@@ -26,4 +29,6 @@ data class WktWorkoutContext(
   var workoutUpdateResponse: WktWorkout = WktWorkout(),
   var workoutReadResponse: WktWorkout = WktWorkout(),
   var workoutSearchResponse: WktWorkoutSearchPayload = WktWorkoutSearchPayload(),
-) : WktContext
+
+  var workoutResponse: Any = WktWorkout(),
+  ) : WktContext
