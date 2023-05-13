@@ -1,3 +1,5 @@
+package ru.otus.otuskotlin.workoutapp.feedback.common
+
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
@@ -10,10 +12,13 @@ data class WktFeedbackContext(
   override var errors: MutableList<WktError> = mutableListOf(),
 
   var workMode: WktWorkMode = WktWorkMode.PROD,
-  var stubCase: WktStub = WktStub.NONE,
+  override var stubCase: WktStub = WktStub.NONE,
 
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
+
+  var feedbackValidity: WktFeedbackPayload = WktFeedbackPayload(),
+  var feedbackValid: WktFeedbackPayload = WktFeedbackPayload(),
 
   var feedbackCreateRequest: WktFeedbackPayload = WktFeedbackPayload(),
   var feedbackUpdateRequest: WktFeedbackPayload = WktFeedbackPayload(),
@@ -23,5 +28,8 @@ data class WktFeedbackContext(
   var feedbackCreateResponse: WktFeedback = WktFeedback(),
   var feedbackReadResponse: MutableList<WktFeedback> = mutableListOf(),
   var feedbackUpdateResponse: WktFeedback = WktFeedback(),
-  var feedbackDeleteResponse: WktFeedbackPayload = WktFeedbackPayload()
+  var feedbackDeleteResponse: WktFeedbackPayload = WktFeedbackPayload(),
+
+  var feedbackResponse: Any = WktFeedback()
+
 ): WktContext
