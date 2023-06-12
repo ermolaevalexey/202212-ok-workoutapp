@@ -18,12 +18,14 @@ kotlin {
       dependencies {
         implementation(kotlin("stdlib-common"))
         implementation(project(":ok-workoutapp-common"))
+        implementation(project(":ok-workoutapp-repo-in-memory"))
         api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
       }
     }
     val commonTest by getting {
       dependencies {
         implementation(kotlin("test-common"))
+        implementation(project(":ok-workoutapp-repo-in-memory"))
         implementation(kotlin("test-annotations-common"))
       }
     }

@@ -5,6 +5,7 @@ import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.*
+import ru.otus.otuskotlin.workoutapp.repoInMemory.IFeedbackRepository
 
 data class WktFeedbackContext(
   override var command: WktCommand = WktCommand.NONE,
@@ -17,6 +18,7 @@ data class WktFeedbackContext(
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
 
+  var feedbackRepo: IFeedbackRepository = IFeedbackRepository.NONE,
   var feedbackValidity: WktFeedbackPayload = WktFeedbackPayload(),
   var feedbackValid: WktFeedbackPayload = WktFeedbackPayload(),
 
