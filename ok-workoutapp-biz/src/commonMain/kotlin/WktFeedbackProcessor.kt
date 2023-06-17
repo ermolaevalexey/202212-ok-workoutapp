@@ -17,7 +17,7 @@ class WktFeedbackProcessor {
 
   private val BusinessChainFeedback = rootChain<WktFeedbackContext> {
     initStatus("Инициализация статуса")
-
+    initRepo("Инициализация репозитория")
     operation("Создание отзыва", WktCommand.FEEDBACK_CREATE) {
       stubs("Обработка стабов") {
         stubCreateFeedbackSuccess("Обработка успешного создания")

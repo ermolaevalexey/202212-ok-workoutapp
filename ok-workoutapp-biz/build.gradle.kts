@@ -22,6 +22,7 @@ kotlin {
         implementation(project(":ok-workoutapp-feedback-common"))
         implementation(project(":ok-workoutapp-stubs"))
         implementation(project(":ok-workoutapp-lib-cor"))
+        implementation(project(":ok-workoutapp-repo-in-memory"))
       }
     }
     @Suppress("UNUSED_VARIABLE")
@@ -29,7 +30,7 @@ kotlin {
       dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))
-
+        implementation(project(":ok-workoutapp-repo-in-memory"))
         api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
       }
     }

@@ -18,7 +18,7 @@ class WktWorkoutProcessor {
   companion object {
     private val BusinessChainWorkout = rootChain<WktWorkoutContext> {
       initStatus("Инициализация статуса")
-
+      initRepo("Инициализация репозитория")
       operation("Создание тренировки", WktCommand.WORKOUT_CREATE) {
         stubs("Обработка стабов") {
           stubCreateWorkoutSuccess("Обработка успешного создания")

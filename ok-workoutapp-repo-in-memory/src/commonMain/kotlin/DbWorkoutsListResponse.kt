@@ -1,17 +1,17 @@
 package ru.otus.otuskotlin.workoutapp.repoInMemory
 
 import ru.otus.otuskotlin.workoutapp.common.models.WktError
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkout
+import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearchPayload
 
 data class DbWorkoutsListResponse(
-  override val data: List<WktWorkout>,
+  override val data: WktWorkoutSearchPayload,
   override val isSuccess: Boolean,
   override val errors: List<WktError> = emptyList()
-): IDbResponse<List<WktWorkout>> {
+): IDbResponse<WktWorkoutSearchPayload> {
   companion object {
-    val MOCK_SUCCESS_EMPTY = DbWorkoutsListResponse(emptyList(), true)
-    fun success(result: List<WktWorkout>) = DbWorkoutsListResponse(result, true)
-    fun error(errors: List<WktError>) = DbWorkoutsListResponse(emptyList(), false, errors)
-    fun error(error: WktError) = DbWorkoutsListResponse(emptyList(), false, listOf(error))
+    val MOCK_SUCCESS_EMPTY = DbWorkoutsListResponse(WktWorkoutSearchPayload(), true)
+    fun success(result: WktWorkoutSearchPayload) = DbWorkoutsListResponse(result, true)
+    fun error(errors: List<WktError>) = DbWorkoutsListResponse(WktWorkoutSearchPayload(), false, errors)
+    fun error(error: WktError) = DbWorkoutsListResponse(WktWorkoutSearchPayload(), false, listOf(error))
   }
 }
