@@ -7,7 +7,7 @@ interface IWorkoutRepository {
 
   suspend fun updateWorkout(req: DbWorkoutRequest): DbWorkoutResponse
 
-  suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutsListResponse
+  suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutSearchResponse
 
   companion object {
     val NONE = object: IWorkoutRepository {
@@ -23,7 +23,7 @@ interface IWorkoutRepository {
         TODO("Not yet implemented")
       }
 
-      override suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutsListResponse {
+      override suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutSearchResponse {
         TODO("Not yet implemented")
       }
     }

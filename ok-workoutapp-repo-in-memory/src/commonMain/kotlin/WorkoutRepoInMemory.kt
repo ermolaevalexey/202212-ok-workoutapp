@@ -78,20 +78,33 @@ class WorkoutRepoInMemory(
     }
   }
 
-  override suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutsListResponse {
+  override suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutSearchResponse {
     val preparedResp = cache.asMap().toList().map { it.second.toInternal() }
-    val rr = preparedResp.groupBy { it.equipment }.toMutableMap()
-    return DbWorkoutsListResponse(
+    return DbWorkoutSearchResponse(
       data = WktWorkoutSearchPayload(
         groups = req.requestObject.groupBy.map { param ->
-          WktWorkoutSearchResult(
-            groupName = param.toString(),
-            workouts = rr
-          )
+          groupSearchWorkouts(param, preparedResp)
         }.toMutableList()
       ),
       isSuccess = true
     )
+  }
+
+  private fun groupSearchWorkouts(groupBy: WktWorkoutSearchGroupBy, workoutsList: List<WktWorkout>): WktWorkoutSearchResult {
+    return when (groupBy) {
+        WktWorkoutSearchGroupBy.WORKOUT_TYPE -> WktWorkoutSearchResult(
+          groupName = groupBy.toString(),
+          workouts = workoutsList.groupBy { it.type.toString() }.toMutableMap()
+        )
+        WktWorkoutSearchGroupBy.EQUIPMENT -> WktWorkoutSearchResult(
+          groupName = groupBy.toString(),
+          workouts = workoutsList.groupBy { it.equipment.toString() }.toMutableMap()
+        )
+        else -> WktWorkoutSearchResult(
+          groupName = WktWorkoutSearchGroupBy.NONE.toString(),
+          workouts = mutableMapOf(WktWorkoutSearchGroupBy.NONE.toString() to workoutsList)
+        )
+    }
   }
 
   companion object {
