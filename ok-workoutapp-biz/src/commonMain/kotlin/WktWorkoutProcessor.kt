@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.workoutapp.biz
 
+import WktCorSettings
 import ru.otus.otuskotlin.workoutapp.biz.general.operation
 import ru.otus.otuskotlin.workoutapp.biz.general.prepareResult
 import ru.otus.otuskotlin.workoutapp.biz.general.stubs
@@ -12,8 +13,8 @@ import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.stubs.WktWorkoutOwnWeightStub
 import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
-class WktWorkoutProcessor {
-  suspend fun exec(ctx: WktWorkoutContext) = BusinessChainWorkout.exec(ctx)
+class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings()) {
+  suspend fun exec(ctx: WktWorkoutContext) = BusinessChainWorkout.exec(ctx.apply { settings = this@WktWorkoutProcessor.settings })
 
   companion object {
     private val BusinessChainWorkout = rootChain<WktWorkoutContext> {

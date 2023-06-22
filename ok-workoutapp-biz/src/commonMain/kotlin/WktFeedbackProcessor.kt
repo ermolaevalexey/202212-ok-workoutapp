@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.workoutapp.biz
 
+import WktCorSettings
 import ru.otus.otuskotlin.workoutapp.biz.general.operation
 import ru.otus.otuskotlin.workoutapp.biz.general.prepareResult
 import ru.otus.otuskotlin.workoutapp.biz.general.stubs
@@ -12,8 +13,8 @@ import ru.otus.otuskotlin.workoutapp.cor.rootChain
 import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 
-class WktFeedbackProcessor {
-  suspend fun exec(ctx: WktFeedbackContext) = BusinessChainFeedback.exec(ctx)
+class WktFeedbackProcessor(private val settings: WktCorSettings = WktCorSettings()) {
+  suspend fun exec(ctx: WktFeedbackContext) = BusinessChainFeedback.exec(ctx.apply { settings = this@WktFeedbackProcessor.settings })
 
   private val BusinessChainFeedback = rootChain<WktFeedbackContext> {
     initStatus("Инициализация статуса")

@@ -45,6 +45,7 @@ dependencies {
   implementation(project(":ok-workoutapp-common"))
   implementation(project(":ok-workoutapp-workout-common"))
   implementation(project(":ok-workoutapp-feedback-common"))
+  implementation(project(":ok-workoutapp-biz"))
   implementation(project(":ok-workoutapp-repo-in-memory"))
 
   //stubs

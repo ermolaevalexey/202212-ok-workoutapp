@@ -10,7 +10,8 @@ fun main() {
     .start(wait = true)
 }
 
-fun Application.module() {
+fun Application.module(appSettings: WktAppSettings = initAppSettings()) {
+  // initPlugins(appSettings)
   configureSerialization()
   configureHTTP()
   configureRouting()
