@@ -15,6 +15,7 @@ kotlin {
     @Suppress("UNUSED_VARIABLE")
     val commonMain by getting {
       dependencies {
+        implementation(project(":ok-workoutapp-api-v1-jackson"))
         implementation(project(":ok-workoutapp-common"))
         implementation(project(":ok-workoutapp-workout-common"))
         implementation(project(":ok-workoutapp-feedback-common"))

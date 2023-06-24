@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.workoutapp.repoInMemory
+package ru.otus.otuskotlin.workoutapp.workout.common.repo
 
 import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearch
 

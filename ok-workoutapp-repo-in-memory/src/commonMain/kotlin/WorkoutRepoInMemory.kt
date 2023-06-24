@@ -8,6 +8,7 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktError
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.repoInMemory.models.WorkoutEntity
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.*
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 

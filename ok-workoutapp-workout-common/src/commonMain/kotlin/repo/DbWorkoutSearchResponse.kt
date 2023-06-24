@@ -1,8 +1,8 @@
-package ru.otus.otuskotlin.workoutapp.repoInMemory
+package ru.otus.otuskotlin.workoutapp.workout.common.repo
 
 import ru.otus.otuskotlin.workoutapp.common.models.WktError
+import ru.otus.otuskotlin.workoutapp.common.repo.IDbResponse
 import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearchPayload
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearchResult
 
 data class DbWorkoutSearchResponse(
   override val data: WktWorkoutSearchPayload,

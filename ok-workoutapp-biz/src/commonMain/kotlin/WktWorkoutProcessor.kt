@@ -11,9 +11,9 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktState
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.cor.rootChain
 import ru.otus.otuskotlin.workoutapp.cor.worker
-import ru.otus.otuskotlin.workoutapp.repoInMemory.DbWorkoutIdRequest
-import ru.otus.otuskotlin.workoutapp.repoInMemory.DbWorkoutRequest
-import ru.otus.otuskotlin.workoutapp.repoInMemory.DbWorkoutSearchRequest
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutIdRequest
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutRequest
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutSearchRequest
 import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
 class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings()) {
