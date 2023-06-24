@@ -1,9 +1,9 @@
 package ru.otus.otuskotlin.workoutapp.mappers.v1
 
-import WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktState
+import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackUser

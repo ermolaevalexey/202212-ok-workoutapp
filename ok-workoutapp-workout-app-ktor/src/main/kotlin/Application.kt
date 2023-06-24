@@ -11,11 +11,7 @@ fun main() {
 }
 
 fun Application.module(appSettings: WktAppSettings = initAppSettings()) {
-  // initPlugins(appSettings)
   configureSerialization()
   configureHTTP()
-  configureRouting()
-//  configureMonitoring()
-//  configureSockets()
-//  configureSecurity()
+  configureRouting(appSettings)
 }

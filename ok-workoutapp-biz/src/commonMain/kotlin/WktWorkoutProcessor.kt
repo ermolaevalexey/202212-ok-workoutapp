@@ -7,10 +7,13 @@ import ru.otus.otuskotlin.workoutapp.biz.general.stubs
 import ru.otus.otuskotlin.workoutapp.biz.validation.*
 import ru.otus.otuskotlin.workoutapp.biz.workers.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
+import ru.otus.otuskotlin.workoutapp.common.models.WktState
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.cor.rootChain
 import ru.otus.otuskotlin.workoutapp.cor.worker
-import ru.otus.otuskotlin.workoutapp.stubs.WktWorkoutOwnWeightStub
+import ru.otus.otuskotlin.workoutapp.repoInMemory.DbWorkoutIdRequest
+import ru.otus.otuskotlin.workoutapp.repoInMemory.DbWorkoutRequest
+import ru.otus.otuskotlin.workoutapp.repoInMemory.DbWorkoutSearchRequest
 import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
 class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings()) {
@@ -41,6 +44,19 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
           validateDescriptionHasContent("Проверка, что описание не пустое")
           finishValidation("Завершение проверок")
         }
+        worker {
+          title = "Создание тренировки"
+          handle {
+            val dbRes = workoutRepo.createWorkout(DbWorkoutRequest(workoutCreateRequest))
+            val data = dbRes.data
+            if (dbRes.isSuccess && data != null) {
+              workoutCreateResponse = data
+            } else {
+              state = WktState.FAILING
+              errors.addAll(dbRes.errors)
+            }
+          }
+        }
         prepareResult("Подготовка ответа")
       }
 
@@ -58,6 +74,19 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
           }
           validateWorkoutIdExist("Проверка на существование id")
           finishValidation("Завершение проверок")
+        }
+        worker {
+          title = "Чтение тренировки"
+          handle {
+            val dbRes = workoutRepo.readWorkout(DbWorkoutIdRequest(workoutReadRequest))
+            val data = dbRes.data
+            if (dbRes.isSuccess && data != null) {
+              workoutReadResponse = data
+            } else {
+              state = WktState.FAILING
+              errors.addAll(dbRes.errors)
+            }
+          }
         }
         prepareResult("Подготовка ответа")
       }
@@ -77,12 +106,38 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
           validateWorkoutIdExist("Проверка на существование id")
           finishValidation("")
         }
+        worker {
+          title = "Обновление тренировки"
+          handle {
+            val dbRes = workoutRepo.updateWorkout(DbWorkoutRequest(workoutUpdateRequest))
+            val data = dbRes.data
+            if (dbRes.isSuccess && data != null) {
+              workoutUpdateResponse = data
+            } else {
+              state = WktState.FAILING
+              errors.addAll(dbRes.errors)
+            }
+          }
+        }
         prepareResult("Подготовка ответа")
       }
 
       operation("Поиск тренировок", WktCommand.WORKOUT_SEARCH) {
         stubs("Обработка стабов") {
           stubSearchWorkoutSuccess("Обработка успешного поиска")
+        }
+        worker {
+          title = "Поиск тренировок"
+          handle {
+            val dbRes = workoutRepo.searchWorkouts(DbWorkoutSearchRequest(workoutSearchRequest))
+            val data = dbRes.data
+            if (dbRes.isSuccess) {
+              workoutSearchResponse = data
+            } else {
+              state = WktState.FAILING
+              errors.addAll(dbRes.errors)
+            }
+          }
         }
         prepareResult("Подготовка ответа")
       }
