@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.workoutapp.repoInMemory
+package ru.otus.otuskotlin.workoutapp.workout.common.repo
 interface IWorkoutRepository {
 
   suspend fun createWorkout(req: DbWorkoutRequest): DbWorkoutResponse

@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.workoutapp.repoInMemory
+package ru.otus.otuskotlin.workoutapp.feedback.common.repo
 
 interface IFeedbackRepository {
   suspend fun createFeedback(req: DbFeedbackRequest): DbFeedbackResponse

@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.workoutapp.repoInMemory
+package ru.otus.otuskotlin.workoutapp.feedback.common.repo
 
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
