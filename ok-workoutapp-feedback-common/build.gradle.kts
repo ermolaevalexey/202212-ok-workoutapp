@@ -18,7 +18,6 @@ kotlin {
       dependencies {
         implementation(kotlin("stdlib-common"))
         implementation(project(":ok-workoutapp-common"))
-        implementation(project(":ok-workoutapp-repo-in-memory"))
         api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
       }
     }
@@ -26,7 +25,6 @@ kotlin {
       dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))
-        implementation(project(":ok-workoutapp-repo-in-memory"))
       }
     }
   }

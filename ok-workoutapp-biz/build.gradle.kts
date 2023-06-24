@@ -16,13 +16,11 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib-common"))
-        implementation(project(":ok-workoutapp-api-v1-jackson"))
         implementation(project(":ok-workoutapp-common"))
         implementation(project(":ok-workoutapp-workout-common"))
         implementation(project(":ok-workoutapp-feedback-common"))
         implementation(project(":ok-workoutapp-stubs"))
         implementation(project(":ok-workoutapp-lib-cor"))
-        implementation(project(":ok-workoutapp-repo-in-memory"))
       }
     }
     @Suppress("UNUSED_VARIABLE")

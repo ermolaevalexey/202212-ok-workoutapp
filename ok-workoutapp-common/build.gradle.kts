@@ -16,8 +16,7 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib-common"))
-        implementation(project(":ok-workoutapp-api-v1-jackson"))
-        implementation(project(":ok-workoutapp-repo-in-memory"))
+        // implementation(project(":ok-workoutapp-api-v1-jackson"))
         api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
       }
     }
@@ -25,7 +24,6 @@ kotlin {
       dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))
-        implementation(project(":ok-workoutapp-repo-in-memory"))
       }
     }
   }
