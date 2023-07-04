@@ -40,8 +40,8 @@ dependencies {
   implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
   //transport models
-  implementation(project(":ok-workoutapp-mappers-v1"))
   implementation(project(":ok-workoutapp-api-v1-jackson"))
+  implementation(project(":ok-workoutapp-mappers-v1"))
   implementation(project(":ok-workoutapp-common"))
   implementation(project(":ok-workoutapp-workout-common"))
   implementation(project(":ok-workoutapp-feedback-common"))
@@ -56,6 +56,7 @@ dependencies {
   implementation(ktor("test-host")) // "io.ktor:ktor-server-test-host:$ktorVersion"
   implementation(ktor("content-negotiation", prefix = "client-"))
   implementation("io.ktor:ktor-server-websockets")
+  implementation(project(mapOf("path" to ":ok-workoutapp-biz")))
   // implementation(ktor("websockets")) // "io.ktor:ktor-server-websockets:$ktorVersion"
 
   testImplementation("io.ktor:ktor-server-tests-jvm:$ktorVersion")

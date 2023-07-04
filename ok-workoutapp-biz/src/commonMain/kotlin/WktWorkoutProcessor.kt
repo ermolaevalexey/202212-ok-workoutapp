@@ -1,8 +1,7 @@
 package ru.otus.otuskotlin.workoutapp.biz
 
-import WktCorSettings
 import ru.otus.otuskotlin.workoutapp.biz.general.operation
-import ru.otus.otuskotlin.workoutapp.biz.general.prepareResult
+import ru.otus.otuskotlin.workoutapp.biz.general.prepareResultWorkout
 import ru.otus.otuskotlin.workoutapp.biz.general.stubs
 import ru.otus.otuskotlin.workoutapp.biz.validation.*
 import ru.otus.otuskotlin.workoutapp.biz.workers.*
@@ -15,8 +14,9 @@ import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutIdRequest
 import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutRequest
 import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutSearchRequest
 import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
+import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutCorSettings
 
-class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings()) {
+class WktWorkoutProcessor(private val settings: WktWorkoutCorSettings = WktWorkoutCorSettings()) {
   suspend fun exec(ctx: WktWorkoutContext) = BusinessChainWorkout.exec(ctx.apply { settings = this@WktWorkoutProcessor.settings })
 
   companion object {
@@ -42,7 +42,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
           }
           validateTitleHasContent("Проверка, что название не пустое")
           validateDescriptionHasContent("Проверка, что описание не пустое")
-          finishValidation("Завершение проверок")
+          finishValidationWorkout("Завершение проверок")
         }
         worker {
           title = "Создание тренировки"
@@ -57,7 +57,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
             }
           }
         }
-        prepareResult("Подготовка ответа")
+        prepareResultWorkout("Подготовка ответа")
       }
 
       operation("Получение тренировки", WktCommand.WORKOUT_READ) {
@@ -73,7 +73,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
             workoutValidity.id = WktWorkoutId.NONE
           }
           validateWorkoutIdExist("Проверка на существование id")
-          finishValidation("Завершение проверок")
+          finishValidationWorkout("Завершение проверок")
         }
         worker {
           title = "Чтение тренировки"
@@ -88,7 +88,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
             }
           }
         }
-        prepareResult("Подготовка ответа")
+        prepareResultWorkout("Подготовка ответа")
       }
 
       operation("Обновление тренировки", WktCommand.WORKOUT_UPDATE) {
@@ -104,7 +104,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
             workoutValidity.id = WktWorkoutId.NONE
           }
           validateWorkoutIdExist("Проверка на существование id")
-          finishValidation("")
+          finishValidationWorkout("")
         }
         worker {
           title = "Обновление тренировки"
@@ -119,7 +119,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
             }
           }
         }
-        prepareResult("Подготовка ответа")
+        prepareResultWorkout("Подготовка ответа")
       }
 
       operation("Поиск тренировок", WktCommand.WORKOUT_SEARCH) {
@@ -139,7 +139,7 @@ class WktWorkoutProcessor(private val settings: WktCorSettings = WktCorSettings(
             }
           }
         }
-        prepareResult("Подготовка ответа")
+        prepareResultWorkout("Подготовка ответа")
       }
     }.build()
   }

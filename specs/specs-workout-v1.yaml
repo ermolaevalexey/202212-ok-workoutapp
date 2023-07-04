@@ -457,9 +457,11 @@ components:
               groupName:
                 type: string
               workouts:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Workout"
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Workout"
 
     FeedbackUpdateResponsePayload:
       allOf:

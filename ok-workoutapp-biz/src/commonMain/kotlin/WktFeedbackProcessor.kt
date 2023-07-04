@@ -1,8 +1,7 @@
 package ru.otus.otuskotlin.workoutapp.biz
 
-import WktCorSettings
 import ru.otus.otuskotlin.workoutapp.biz.general.operation
-import ru.otus.otuskotlin.workoutapp.biz.general.prepareResult
+import ru.otus.otuskotlin.workoutapp.biz.general.prepareResultFeedback
 import ru.otus.otuskotlin.workoutapp.biz.general.stubs
 import ru.otus.otuskotlin.workoutapp.biz.validation.*
 import ru.otus.otuskotlin.workoutapp.biz.workers.*
@@ -12,8 +11,9 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.cor.rootChain
 import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
+import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackCorSettings
 
-class WktFeedbackProcessor(private val settings: WktCorSettings = WktCorSettings()) {
+class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFeedbackCorSettings()) {
   suspend fun exec(ctx: WktFeedbackContext) = BusinessChainFeedback.exec(ctx.apply { settings = this@WktFeedbackProcessor.settings })
 
   private val BusinessChainFeedback = rootChain<WktFeedbackContext> {
@@ -32,9 +32,9 @@ class WktFeedbackProcessor(private val settings: WktCorSettings = WktCorSettings
           feedbackValidity.review = "".trim()
         }
         validateReviewIsExist("Проверка, что отзыв не пуст")
-        finishValidation("Завершение проверок")
+        finishValidationFeedback("Завершение проверок")
       }
-      prepareResult("Подготовка ответа")
+      prepareResultFeedback("Подготовка ответа")
     }
 
     operation("Получение отзывов", WktCommand.FEEDBACK_READ) {
@@ -44,9 +44,9 @@ class WktFeedbackProcessor(private val settings: WktCorSettings = WktCorSettings
       }
       validation {
         validateWorkoutId("Проверка на существование поля workout")
-        finishValidation("Завершение проверок")
+        finishValidationFeedback("Завершение проверок")
       }
-      prepareResult("Подготовка ответа")
+      prepareResultFeedback("Подготовка ответа")
     }
 
     operation("Обновление отзыва", WktCommand.FEEDBACK_UPDATE) {
@@ -67,9 +67,9 @@ class WktFeedbackProcessor(private val settings: WktCorSettings = WktCorSettings
         }
         validateWorkoutId("Проверка на существование workout")
         validateReviewIsExist("Проверка на существование review")
-        finishValidation("Завершение проверок")
+        finishValidationFeedback("Завершение проверок")
       }
-      prepareResult("Подготовка ответа")
+      prepareResultFeedback("Подготовка ответа")
     }
 
     operation("Поиск тренировок", WktCommand.FEEDBACK_DELETE) {
@@ -82,9 +82,9 @@ class WktFeedbackProcessor(private val settings: WktCorSettings = WktCorSettings
           feedbackValidity.id = WktFeedbackId.NONE
         }
         validateFeedbackIdIsExist("проверка на передачу id отзыва в запросе")
-        finishValidation("Завершение проверок")
+        finishValidationFeedback("Завершение проверок")
       }
-      prepareResult("Подготовка ответа")
+      prepareResultFeedback("Подготовка ответа")
     }
   }.build()
 }

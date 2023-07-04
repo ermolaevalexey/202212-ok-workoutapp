@@ -1,28 +1,33 @@
 package ok.workoutapp.workout.app.ktor.plugins
 
-import WktCorSettings
 import io.ktor.server.application.*
 import ok.workoutapp.workout.app.ktor.WktAppSettings
 import ru.otus.otuskotlin.workoutapp.biz.WktFeedbackProcessor
 import ru.otus.otuskotlin.workoutapp.biz.WktWorkoutProcessor
+import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackCorSettings
 import ru.otus.otuskotlin.workoutapp.repoInMemory.WorkoutRepoInMemory
+import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutCorSettings
 
 fun Application.initAppSettings(): WktAppSettings {
   val workoutRepoProd = getDatabaseConfWorkout()
   val workoutRepoStub = getDatabaseConfWorkout()
   val workoutRepoTest = getDatabaseConfWorkout()
-  val corSettings = WktCorSettings(
+
+  val corSettingsWorkout = WktWorkoutCorSettings(
     workoutRepoProd = workoutRepoProd,
     workoutRepoStub = workoutRepoStub,
     workoutRepoTest = workoutRepoTest,
-    feedbackRepoProd = getDatabaseConfFeedback(workoutRepoProd as WorkoutRepoInMemory),
-    feedbackRepoStub = getDatabaseConfFeedback(workoutRepoStub as WorkoutRepoInMemory),
-    feedbackRepoTest = getDatabaseConfFeedback(workoutRepoTest as WorkoutRepoInMemory)
+  )
+  val corSettingsFeedback = WktFeedbackCorSettings(
+    feedbackRepoProd = getDatabaseConfFeedback(workoutRepoProd),
+    feedbackRepoStub = getDatabaseConfFeedback(workoutRepoStub),
+    feedbackRepoTest = getDatabaseConfFeedback(workoutRepoTest)
   )
   return WktAppSettings(
     appUrls = environment.config.propertyOrNull("ktor.urls")?.getList() ?: emptyList(),
-    corSettings = corSettings,
-    processorWorkout = WktWorkoutProcessor(corSettings),
-    processorFeedback = WktFeedbackProcessor(corSettings)
+    corSettingsWorkout = corSettingsWorkout,
+    corSettingsFeedback = corSettingsFeedback,
+    processorWorkout = WktWorkoutProcessor(corSettingsWorkout),
+    processorFeedback = WktFeedbackProcessor(corSettingsFeedback)
   )
 }

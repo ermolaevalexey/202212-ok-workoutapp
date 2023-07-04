@@ -1,6 +1,5 @@
 package ru.otus.otuskotlin.workoutapp.workout.common
 
-import WktCorSettings
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
@@ -18,7 +17,7 @@ data class WktWorkoutContext(
 
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
-  var settings: WktCorSettings = WktCorSettings.NONE,
+  var settings: WktWorkoutCorSettings = WktWorkoutCorSettings.NONE,
   var workoutRepo: IWorkoutRepository = IWorkoutRepository.NONE,
   var workoutValidity: WktWorkout = WktWorkout(),
   var workoutValid: WktWorkout = WktWorkout(),

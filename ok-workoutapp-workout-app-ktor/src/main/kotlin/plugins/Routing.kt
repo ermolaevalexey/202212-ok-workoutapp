@@ -7,10 +7,8 @@ import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
 import ok.workoutapp.workout.app.ktor.WktAppSettings
 import ok.workoutapp.workout.app.ktor.controllers.*
-//import ok.workoutapp.workout.app.ktor.ws.wsPing
 
 fun Application.configureRouting(appSettings: WktAppSettings) {
   install(AutoHeadResponse)
@@ -38,15 +36,10 @@ fun Application.configureRouting(appSettings: WktAppSettings) {
     }
   }
   install(CachingHeaders)
-  install(AutoHeadResponse)
   routing {
     get("/") {
       call.respondText("Hello KTOR WorkoutApp!")
     }
-
-//    webSocket("ws/ping") {
-//      wsPing()
-//    }
 
     route("v1") {
       route("workouts") {

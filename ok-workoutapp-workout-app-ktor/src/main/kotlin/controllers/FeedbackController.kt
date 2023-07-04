@@ -1,11 +1,11 @@
 package ok.workoutapp.workout.app.ktor.controllers
 
-import WktFeedbackContext
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
+import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.mappers.v1.*
 import ru.otus.otuskotlin.workoutapp.stubs.*

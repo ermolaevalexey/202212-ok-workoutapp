@@ -83,5 +83,5 @@ private fun WktWorkoutSearchPayload.toTransport() = WorkoutSearchResponsePayload
 )
 private fun WktWorkoutSearchResult.toTransport() = WorkoutSearchResponsePayloadGroupsInner(
   groupName = this.groupName,
-  workouts = this.workouts.map { it.toTransportWorkout() }
+  workouts = this.workouts.mapValues { it.value.map { wkt -> wkt.toTransportWorkout() }.toList() }
 )

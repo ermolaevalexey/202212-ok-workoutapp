@@ -1,6 +1,5 @@
 package ru.otus.otuskotlin.workoutapp.feedback.common
 
-import WktCorSettings
 import kotlinx.datetime.Instant
 import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
@@ -18,7 +17,7 @@ data class WktFeedbackContext(
 
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
-  var settings: WktCorSettings = WktCorSettings.NONE,
+  var settings: WktFeedbackCorSettings = WktFeedbackCorSettings.NONE,
   var feedbackRepo: IFeedbackRepository = IFeedbackRepository.NONE,
   var feedbackValidity: WktFeedbackPayload = WktFeedbackPayload(),
   var feedbackValid: WktFeedbackPayload = WktFeedbackPayload(),

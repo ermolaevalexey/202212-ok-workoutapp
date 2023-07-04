@@ -6,9 +6,8 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktWorkMode
 import ru.otus.otuskotlin.workoutapp.cor.ICorChainDsl
 import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
-import ru.otus.otuskotlin.workoutapp.feedback.common.helpers.addError
 import ru.otus.otuskotlin.workoutapp.feedback.common.helpers.fail
-import ru.otus.otuskotlin.workoutapp.repoInMemory.IFeedbackRepository
+import ru.otus.otuskotlin.workoutapp.feedback.common.repo.IFeedbackRepository
 
 fun ICorChainDsl<WktFeedbackContext>.initRepo(title: String) = worker {
   this.title = title

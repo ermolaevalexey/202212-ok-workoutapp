@@ -95,15 +95,15 @@ class WorkoutRepoInMemory(
     return when (groupBy) {
         WktWorkoutSearchGroupBy.WORKOUT_TYPE -> WktWorkoutSearchResult(
           groupName = groupBy.toString(),
-          workouts = workoutsList.groupBy { it.type.toString() }.toMutableMap()
+          workouts = workoutsList.groupBy { it.type.toString() }.mapValues { it.value.toMutableList() }.toMutableMap()
         )
         WktWorkoutSearchGroupBy.EQUIPMENT -> WktWorkoutSearchResult(
           groupName = groupBy.toString(),
-          workouts = workoutsList.groupBy { it.equipment.toString() }.toMutableMap()
+          workouts = workoutsList.groupBy { it.equipment.toString() }.mapValues { it.value.toMutableList() }.toMutableMap()
         )
         else -> WktWorkoutSearchResult(
           groupName = WktWorkoutSearchGroupBy.NONE.toString(),
-          workouts = mutableMapOf(WktWorkoutSearchGroupBy.NONE.toString() to workoutsList)
+          workouts = mutableMapOf(WktWorkoutSearchGroupBy.NONE.toString() to workoutsList.toMutableList())
         )
     }
   }

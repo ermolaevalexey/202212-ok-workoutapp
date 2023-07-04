@@ -1,7 +1,7 @@
 package ru.otus.otuskotlin.workoutapp.biz
 
-import WktFeedbackContext
-import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
+import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
+
 import ru.otus.otuskotlin.workoutapp.common.models.WktContext
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.stubs.WktFeedbackStub

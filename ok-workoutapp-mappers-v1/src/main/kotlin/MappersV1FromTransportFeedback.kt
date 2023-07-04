@@ -1,10 +1,10 @@
 package ru.otus.otuskotlin.workoutapp.mappers.v1
 
-import WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkMode
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
+import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackUser
 import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownRequestClass

@@ -8,7 +8,7 @@ import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
-fun ICorChainDsl<WktWorkoutContext>.prepareResult(title: String) = worker {
+fun ICorChainDsl<WktWorkoutContext>.prepareResultWorkout(title: String) = worker {
   this.title = title
   description = "Подготовка данных для ответа клиенту на запрос"
   on { workMode != WktWorkMode.STUB }
@@ -27,7 +27,7 @@ fun ICorChainDsl<WktWorkoutContext>.prepareResult(title: String) = worker {
   }
 }
 
-fun ICorChainDsl<WktFeedbackContext>.prepareResult(title: String) = worker {
+fun ICorChainDsl<WktFeedbackContext>.prepareResultFeedback(title: String) = worker {
   this.title = title
   description = "Подготовка данных для ответа"
   on { workMode != WktWorkMode.STUB }
