@@ -28,7 +28,6 @@ kotlin {
       dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))
-        implementation(project(":ok-workoutapp-repo-in-memory"))
         api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
       }
     }
