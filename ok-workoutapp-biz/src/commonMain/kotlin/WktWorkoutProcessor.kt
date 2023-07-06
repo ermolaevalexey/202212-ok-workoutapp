@@ -34,12 +34,6 @@ class WktWorkoutProcessor(private val settings: WktWorkoutCorSettings = WktWorko
           worker("Копируем поля в объект валидации") {
             workoutValidity = workoutCreateRequest.copy()
           }
-          worker("Очистка title") {
-            workoutValidity.title = "".trim()
-          }
-          worker("Очистка description") {
-            workoutValidity.description = "".trim()
-          }
           validateTitleHasContent("Проверка, что название не пустое")
           validateDescriptionHasContent("Проверка, что описание не пустое")
           finishValidationWorkout("Завершение проверок")
@@ -50,6 +44,7 @@ class WktWorkoutProcessor(private val settings: WktWorkoutCorSettings = WktWorko
             val dbRes = workoutRepo.createWorkout(DbWorkoutRequest(workoutCreateRequest))
             val data = dbRes.data
             if (dbRes.isSuccess && data != null) {
+              state = WktState.RUNNING
               workoutCreateResponse = data
             } else {
               state = WktState.FAILING
@@ -68,9 +63,6 @@ class WktWorkoutProcessor(private val settings: WktWorkoutCorSettings = WktWorko
         validation {
           worker("Копируем поля в объект валидации") {
             workoutValidity.id = WktWorkoutId(workoutReadRequest.asString())
-          }
-          worker("Очистка id") {
-            workoutValidity.id = WktWorkoutId.NONE
           }
           validateWorkoutIdExist("Проверка на существование id")
           finishValidationWorkout("Завершение проверок")
@@ -98,13 +90,12 @@ class WktWorkoutProcessor(private val settings: WktWorkoutCorSettings = WktWorko
         }
         validation {
           worker("Копируем поля в объект валидации") {
-            workoutValidity.id = WktWorkoutId(workoutUpdateRequest.id.asString())
-          }
-          worker("Очистка id") {
-            workoutValidity.id = WktWorkoutId.NONE
+            workoutValidity = workoutUpdateRequest.copy(
+              id = WktWorkoutId(workoutUpdateRequest.id.asString())
+            )
           }
           validateWorkoutIdExist("Проверка на существование id")
-          finishValidationWorkout("")
+          finishValidationWorkout("Завершение проверок")
         }
         worker {
           title = "Обновление тренировки"

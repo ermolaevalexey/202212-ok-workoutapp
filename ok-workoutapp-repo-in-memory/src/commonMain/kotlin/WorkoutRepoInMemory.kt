@@ -51,29 +51,32 @@ class WorkoutRepoInMemory(
   }
 
   override suspend fun readWorkout(req: DbWorkoutIdRequest): DbWorkoutResponse {
-    val key = req.id.takeIf { it != WktWorkoutId.NONE }?.asString() ?: return resultErrorEmptyId
-    return cache.get(key)?.let {
-      DbWorkoutResponse(
-        data = it.toInternal(),
-        isSuccess = true
-      )
-    } ?: resultErrorNotFound
+    val key = req.id.takeIf { it.toString().isNotEmpty() }?.asString() ?: return resultErrorEmptyId
+
+    val wkt = cache.get(key)
+    return when (wkt) {
+      null -> resultErrorNotFound
+      else -> DbWorkoutResponse.success(wkt.toInternal())
+    }
   }
 
   override suspend fun updateWorkout(req: DbWorkoutRequest): DbWorkoutResponse {
-    val key = req.workout.id.takeIf { it != WktWorkoutId.NONE }?.asString() ?: return resultErrorEmptyId
-    val newWorkout = req.workout.copy()
-    val entity = WorkoutEntity(newWorkout)
+    val key = req.workout.id.takeIf { it.toString().isNotEmpty() }?.asString() ?: return resultErrorEmptyId
+    val newWkt = req.workout.copy()
+
     return mutex.withLock {
       val oldWkt = cache.get(key)
       when {
         oldWkt == null -> resultErrorNotFound
         else -> {
-          cache.put(key, entity)
-          DbWorkoutResponse(
-            data = newWorkout,
-            isSuccess = true
+          val wktUpdated = oldWkt.copy(
+            title = newWkt.title.takeIf { it.isNotEmpty() } ?: oldWkt.title,
+            description = newWkt.description.takeIf { it.isNotEmpty() } ?: oldWkt.description,
+            content = newWkt.content.takeIf { it.video.isNotEmpty() && (it.steps?.isNotEmpty()) as Boolean } ?: oldWkt.content,
+            rating = newWkt.rating.takeIf { it != oldWkt.rating } ?: oldWkt.rating
           )
+          cache.put(key, wktUpdated)
+          DbWorkoutResponse.success(wktUpdated.toInternal())
         }
       }
     }
@@ -81,14 +84,12 @@ class WorkoutRepoInMemory(
 
   override suspend fun searchWorkouts(req: DbWorkoutSearchRequest): DbWorkoutSearchResponse {
     val preparedResp = cache.asMap().toList().map { it.second.toInternal() }
-    return DbWorkoutSearchResponse(
-      data = WktWorkoutSearchPayload(
-        groups = req.requestObject.groupBy.map { param ->
-          groupSearchWorkouts(param, preparedResp)
-        }.toMutableList()
-      ),
-      isSuccess = true
-    )
+    return DbWorkoutSearchResponse.success(
+      WktWorkoutSearchPayload(
+      groups = req.requestObject.groupBy.map { param ->
+        groupSearchWorkouts(param, preparedResp)
+      }.toMutableList()
+    ))
   }
 
   private fun groupSearchWorkouts(groupBy: WktWorkoutSearchGroupBy, workoutsList: List<WktWorkout>): WktWorkoutSearchResult {
@@ -109,27 +110,19 @@ class WorkoutRepoInMemory(
   }
 
   companion object {
-    val resultErrorEmptyId = DbWorkoutResponse(
-      data = null,
-      isSuccess = false,
-      errors = listOf(
-        WktError(
-          field = "id",
-          message = "id must not be null or blank"
-        )
+    val resultErrorEmptyId = DbWorkoutResponse.error(listOf(
+      WktError(
+        field = "id",
+        message = "id must not be null or blank"
       )
-    )
+    ))
 
-    val resultErrorNotFound = DbWorkoutResponse(
-      data = null,
-      isSuccess = false,
-      errors = listOf(
-        WktError(
-          code = "not-found",
-          field = "id",
-          message = "not-found"
-        )
+    val resultErrorNotFound = DbWorkoutResponse.error(listOf(
+      WktError(
+        code = "not-found",
+        field = "id",
+        message = "not-found"
       )
-    )
+    ))
   }
 }

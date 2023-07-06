@@ -8,8 +8,10 @@ import ru.otus.otuskotlin.workoutapp.workout.common.helpers.fail
 
 fun ICorChainDsl<WktWorkoutContext>.validateTitleHasContent(title: String) = worker {
   this.title = title
-  on { workoutValidity.title.isNotEmpty()}
+  on { workoutValidity.title.isEmpty()}
   handle {
+    println("Validation title")
+    println(workoutValidity)
     fail(
       errorValidation(
         field = "title",
