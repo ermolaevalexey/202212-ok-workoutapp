@@ -22,7 +22,7 @@ services:
 
   app:
     image: ok-workoutapp-app-ktor:0.0.3
-    container_name: app-spring
+    container_name: app-ktor
     ports:
       - "8080:8080"
     expose:
