@@ -1,4 +1,4 @@
-package ok.workoutapp.workout.app.ktor.plugins
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor.plugins
 
 import java.time.Duration
 import io.ktor.server.plugins.cachingheaders.*

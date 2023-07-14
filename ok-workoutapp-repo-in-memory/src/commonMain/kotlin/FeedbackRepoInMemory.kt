@@ -11,6 +11,7 @@ import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.feedback.common.repo.*
 import ru.otus.otuskotlin.workoutapp.repoInMemory.models.FeedbackEntity
 import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutIdRequest
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.IWorkoutRepository
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -18,7 +19,7 @@ class FeedbackRepoInMemory(
     initObjects: List<WktFeedback> = emptyList(),
     ttl: Duration = 2.minutes,
     val randomUuid: () -> String = { uuid4().toString() },
-    val wktRepo: WorkoutRepoInMemory
+    val wktRepo: IWorkoutRepository
 ): IFeedbackRepository {
     private val cache = Cache.Builder<String, MutableList<FeedbackEntity>>()
         .expireAfterWrite(ttl)

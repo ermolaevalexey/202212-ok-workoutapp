@@ -1,4 +1,4 @@
-package ok.workoutapp.workout.app.ktor.controllers
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor.controllers
 
 import io.ktor.server.application.*
 import io.ktor.server.request.*

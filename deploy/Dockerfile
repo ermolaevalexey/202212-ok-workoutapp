@@ -11,4 +11,4 @@ COPY default /etc/nginx/sites-available/default
 EXPOSE 80/tcp
 
 # Run the Nginx server
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]
+CMD ["/usr/sbin/nginx", "-g", "daemon off;", ""]

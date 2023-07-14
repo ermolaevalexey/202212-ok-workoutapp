@@ -1,4 +1,4 @@
-package ok.workoutapp.workout.app.ktor.ws
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor.ws
 
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.collect

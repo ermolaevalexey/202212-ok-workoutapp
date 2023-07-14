@@ -1,4 +1,4 @@
-package ok.workoutapp.workout.app.ktor.plugins
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor.plugins
 
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -7,8 +7,8 @@ import io.ktor.server.plugins.cachingheaders.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import ok.workoutapp.workout.app.ktor.WktAppSettings
-import ok.workoutapp.workout.app.ktor.controllers.*
+import ru.otus.otuskotlin.workoutapp.workout.app.ktor.controllers.*
+import ru.otus.otuskotlin.workoutapp.workout.app.ktor.WktAppSettings
 
 fun Application.configureRouting(appSettings: WktAppSettings) {
   install(AutoHeadResponse)

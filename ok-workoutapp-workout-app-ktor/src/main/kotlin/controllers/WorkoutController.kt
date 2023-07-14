@@ -1,14 +1,12 @@
-package ok.workoutapp.workout.app.ktor.controllers
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor.controllers
 
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
-import ok.workoutapp.workout.app.ktor.WktAppSettings
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
-import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.workout.common.*
 import ru.otus.otuskotlin.workoutapp.mappers.v1.*
-import ru.otus.otuskotlin.workoutapp.stubs.*
+import ru.otus.otuskotlin.workoutapp.workout.app.ktor.WktAppSettings
 
 
 suspend fun ApplicationCall.createWorkout(appSettings: WktAppSettings) {

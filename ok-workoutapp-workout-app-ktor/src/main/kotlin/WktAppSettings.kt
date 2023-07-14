@@ -1,4 +1,4 @@
-package ok.workoutapp.workout.app.ktor
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor
 
 import ru.otus.otuskotlin.workoutapp.biz.WktFeedbackProcessor
 import ru.otus.otuskotlin.workoutapp.biz.WktWorkoutProcessor
