@@ -31,3 +31,14 @@ fun errorAdministration(
   level = level,
   exception = exception,
 )
+
+val errorNotFound = WktError(
+  field = "id",
+  message = "Not Found",
+  code = "not-found"
+)
+
+val errorEmptyId = WktError(
+  field = "id",
+  message = "Id must not be null or blank"
+)

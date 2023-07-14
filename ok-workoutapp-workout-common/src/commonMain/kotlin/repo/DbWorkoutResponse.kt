@@ -3,6 +3,8 @@ package ru.otus.otuskotlin.workoutapp.workout.common.repo
 import ru.otus.otuskotlin.workoutapp.common.models.WktError
 import ru.otus.otuskotlin.workoutapp.common.repo.IDbResponse
 import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkout
+import ru.otus.otuskotlin.workoutapp.common.helpers.errorNotFound as wktErrorNotFound
+import ru.otus.otuskotlin.workoutapp.common.helpers.errorEmptyId as wktErrorEmptyId
 
 data class DbWorkoutResponse(
   override val data: WktWorkout?,
@@ -14,6 +16,10 @@ data class DbWorkoutResponse(
     fun success(result: WktWorkout) = DbWorkoutResponse(result, true)
     fun error(errors: List<WktError>) = DbWorkoutResponse(null, false, errors)
     fun error(error: WktError) = DbWorkoutResponse(null, false, listOf(error))
+
+    val errorEmptyId = error(wktErrorEmptyId)
+
+    val errorNotFound = error(wktErrorNotFound)
 
   }
 }
