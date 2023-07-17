@@ -8,12 +8,12 @@ data class PostgresConfig(
   val password: String = "workoutapp-pass",
   val schema: String = "workoutapp",
 ) {
-  constructor(config: ApplicationConfig): this(
-    url = config.property("$PATH.url").getString(),
-    user = config.property("$PATH.user").getString(),
-    password = config.property("$PATH.password").getString(),
-    schema = config.property("$PATH.schema").getString(),
-  )
+//  constructor(config: ApplicationConfig): this(
+//    url = config.property("$PATH.url").getString(),
+//    user = config.property("$PATH.user").getString(),
+//    password = config.property("$PATH.password").getString(),
+//    schema = config.property("$PATH.schema").getString(),
+//  )
 
   companion object {
     const val PATH = "${ConfigPaths.repository}.psql"

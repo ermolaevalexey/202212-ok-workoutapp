@@ -28,13 +28,20 @@ class RepoWorkoutSql (
     )
 
     transaction {
-      if (properties.dropDatabase) SchemaUtils.drop(WorkoutTable)
+      if (properties.dropDatabase) {
+        SchemaUtils.drop(WorkoutTable)
+        SchemaUtils.drop(WorkoutContentTable)
+        SchemaUtils.drop(WorkoutStepTable)
+      }
+
       SchemaUtils.create(WorkoutTable)
-      initObjects.forEach { createWkt(it) }
+      SchemaUtils.create(WorkoutContentTable)
+      SchemaUtils.create(WorkoutStepTable)
+      initObjects.forEach { createWorkout(it) }
     }
   }
 
-  private fun createWkt(wkt: WktWorkout): WktWorkout {
+  private fun createWorkout(wkt: WktWorkout): WktWorkout {
     val res = WorkoutTable.insert {
       to(it, wkt, randomUuid)
     }
@@ -58,7 +65,7 @@ class RepoWorkoutSql (
     transactionWrapper(block) { DbWorkoutSearchResponse.error(WktError(it.toString())) }
 
   override suspend fun createWorkout(req: DbWorkoutRequest): DbWorkoutResponse = transactionWrapper {
-    DbWorkoutResponse.success(createWkt(req.workout))
+    DbWorkoutResponse.success(createWorkout(req.workout))
   }
 
   private fun read(id: WktWorkoutId): DbWorkoutResponse {
