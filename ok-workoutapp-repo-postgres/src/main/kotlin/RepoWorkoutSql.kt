@@ -5,10 +5,7 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.otus.otuskotlin.workoutapp.common.models.WktError
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkout
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearchGroupBy
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearchPayload
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkoutSearchResult
+import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 import ru.otus.otuskotlin.workoutapp.workout.common.repo.*
 
 class RepoWorkoutSql (
@@ -44,6 +41,17 @@ class RepoWorkoutSql (
   private fun createWorkout(wkt: WktWorkout): WktWorkout {
     val res = WorkoutTable.insert {
       to(it, wkt, randomUuid)
+    }
+
+    val wktId = res[WorkoutTable.id]
+    WorkoutContentTable.insert {
+      to(it, wkt.content.copy(workoutId = WktWorkoutId(wktId)), randomUuid)
+    }
+
+    wkt.content.steps?.forEach { step ->
+      WorkoutStepTable.insert {
+        to(it, step.copy(workoutId = WktWorkoutId(wktId)))
+      }
     }
 
     return WorkoutTable.from(res)
