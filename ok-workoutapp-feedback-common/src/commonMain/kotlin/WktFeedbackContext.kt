@@ -22,10 +22,10 @@ data class WktFeedbackContext(
   var feedbackValidity: WktFeedbackPayload = WktFeedbackPayload(),
   var feedbackValid: WktFeedbackPayload = WktFeedbackPayload(),
 
-  var feedbackCreateRequest: WktFeedbackPayload = WktFeedbackPayload(),
-  var feedbackUpdateRequest: WktFeedbackPayload = WktFeedbackPayload(),
+  var feedbackCreateRequest: WktFeedbackCreateRequest = WktFeedbackCreateRequest(),
+  var feedbackUpdateRequest: WktFeedbackUpdateRequest = WktFeedbackUpdateRequest(),
   var feedbackReadRequest: WktWorkoutId = WktWorkoutId.NONE,
-  var feedbackDeleteRequest: WktFeedbackPayload = WktFeedbackPayload(),
+  var feedbackDeleteRequest: WktFeedbackDeleteRequest = WktFeedbackDeleteRequest(),
 
   var feedbackCreateResponse: WktFeedback = WktFeedback(),
   var feedbackReadResponse: MutableList<WktFeedback> = mutableListOf(),

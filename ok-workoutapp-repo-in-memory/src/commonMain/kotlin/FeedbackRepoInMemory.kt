@@ -40,7 +40,7 @@ class FeedbackRepoInMemory(
         cache.put(entity.workout.asString(), fbs)
     }
 
-    override suspend fun createFeedback(req: DbFeedbackRequest): DbFeedbackResponse {
+    override suspend fun createFeedback(req: DbFeedbackCreateRequest): DbFeedbackResponse {
         val wktKey = req.workoutId.takeIf { it != WktWorkoutId.NONE }?.asString() ?: return resultErrorEmptyWorkoutId
         val wktResp = wktRepo.readWorkout(DbWorkoutIdRequest(WktWorkoutId(wktKey)));
         if (wktResp.isSuccess) {
@@ -77,8 +77,8 @@ class FeedbackRepoInMemory(
         return resultErrorListNotFound
     }
 
-    override suspend fun updateFeedback(req: DbFeedbackRequest): DbFeedbackResponse {
-        val key = req.workoutId.takeIf { it != WktWorkoutId.NONE }?.asString() ?: return resultErrorEmptyWorkoutId
+    override suspend fun updateFeedback(req: DbFeedbackUpdateRequest): DbFeedbackResponse {
+        val key = req.feedbackId.takeIf { it != WktFeedbackId.NONE }?.asString() ?: return resultErrorEmptyWorkoutId
         val wktResp = wktRepo.readWorkout(DbWorkoutIdRequest(WktWorkoutId(key)));
         if (wktResp.isSuccess) {
             return mutex.withLock {

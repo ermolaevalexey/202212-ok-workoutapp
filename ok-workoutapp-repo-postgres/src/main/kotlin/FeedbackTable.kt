@@ -39,7 +39,7 @@ object FeedbackTable : Table("feedback") {
     it[id] = feedback.id.takeIf { it != WktFeedbackId.NONE }?.asString() ?: randomUuid()
     it[review] = feedback.review
     it[rating] = feedback.rating
-    it[userId] = feedback.user.toString()
-    it[workoutId] = feedback.workout.toString()
+    it[userId] = feedback.userId.toString()
+    it[workoutId] = feedback.workoutId.toString()
   }
 }

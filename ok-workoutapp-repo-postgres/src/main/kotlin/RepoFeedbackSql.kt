@@ -10,8 +10,6 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
 import ru.otus.otuskotlin.workoutapp.feedback.common.repo.*
-import ru.otus.otuskotlin.workoutapp.workout.common.models.WktWorkout
-import ru.otus.otuskotlin.workoutapp.workout.common.repo.DbWorkoutResponse
 
 class RepoFeedbackSql (
   properties: SqlProperties,
@@ -96,8 +94,8 @@ class RepoFeedbackSql (
     }
   }
 
-  override suspend fun createFeedback(req: DbFeedbackRequest): DbFeedbackResponse = transactionWrapper {
-    DbFeedbackResponse.success(createFbk(req.data.copy(workout = req.workoutId)))
+  override suspend fun createFeedback(req: DbFeedbackCreateRequest): DbFeedbackResponse = transactionWrapper {
+    DbFeedbackResponse.success(createFbk(req.data.copy(workoutId = req.workoutId)))
   }
 
   override suspend fun readFeedback(req: DbFeedbackWorkoutIdRequest): DbFeedbackListResponse = transactionListWrapper {
@@ -107,7 +105,7 @@ class RepoFeedbackSql (
     return@transactionListWrapper DbFeedbackListResponse.success(res.map { FeedbackTable.from(it) })
   }
 
-  override suspend fun updateFeedback(req: DbFeedbackRequest): DbFeedbackResponse = updateFbk(req.feedbackId, req.data) {
+  override suspend fun updateFeedback(req: DbFeedbackUpdateRequest): DbFeedbackResponse = updateFbk(req.feedbackId, req.data) {
     FeedbackTable.update({ FeedbackTable.id eq it.id.asString() }) {
       to(it, req.data.copy(), randomUuid)
     }

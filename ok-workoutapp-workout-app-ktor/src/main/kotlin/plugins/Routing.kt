@@ -66,7 +66,7 @@ fun Application.configureRouting(appSettings: WktAppSettings) {
         }
 
         post ("create") {
-          call.createFeedback()
+          call.createFeedback(appSettings)
         }
 
         post ("update") {

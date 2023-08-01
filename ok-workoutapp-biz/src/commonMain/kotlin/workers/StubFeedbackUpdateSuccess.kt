@@ -12,9 +12,9 @@ fun ICorChainDsl<WktFeedbackContext>.stubFeedbackUpdateSuccess(title: String) = 
   handle {
     state = WktState.FINISHING
     val stub = WktFeedbackStub.prepareCreateFeedback(
-      feedbackUpdateRequest.id.asString(),
-      feedbackUpdateRequest.workout.asString(),
-      feedbackUpdateRequest.user?.asString(),
+      feedbackUpdateRequest.feedbackId.asString(),
+      feedbackUpdateRequest.workoutId.asString(),
+      feedbackUpdateRequest.data.userId?.asString(),
       3.0,
       "Not so good!"
     )

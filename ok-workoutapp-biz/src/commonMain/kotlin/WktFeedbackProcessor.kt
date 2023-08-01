@@ -7,11 +7,14 @@ import ru.otus.otuskotlin.workoutapp.biz.validation.*
 import ru.otus.otuskotlin.workoutapp.biz.workers.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktFeedbackId
+import ru.otus.otuskotlin.workoutapp.common.models.WktState
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.cor.rootChain
 import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackCorSettings
+import ru.otus.otuskotlin.workoutapp.feedback.common.repo.DbFeedbackCreateRequest
+import ru.otus.otuskotlin.workoutapp.feedback.common.repo.DbFeedbackUpdateRequest
 
 class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFeedbackCorSettings()) {
   suspend fun exec(ctx: WktFeedbackContext) = BusinessChainFeedback.exec(ctx.apply { settings = this@WktFeedbackProcessor.settings })
@@ -26,13 +29,27 @@ class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFee
       }
       validation {
         worker("Копируем поля в объект валидации") {
-          feedbackValidity = feedbackCreateRequest.copy()
-        }
-        worker("Очистка review") {
-          feedbackValidity.review = "".trim()
+          feedbackValidity = feedbackCreateRequest.data.copy()
         }
         validateReviewIsExist("Проверка, что отзыв не пуст")
         finishValidationFeedback("Завершение проверок")
+      }
+      worker {
+        title = "Создание тренировки"
+        handle {
+          val dbRes = feedbackRepo.createFeedback(DbFeedbackCreateRequest(
+            workoutId = feedbackCreateRequest.workoutId,
+            data = feedbackCreateRequest.data
+          ))
+          val data = dbRes.data
+          if (dbRes.isSuccess && data != null) {
+            state = WktState.RUNNING
+            feedbackCreateResponse = data
+          } else {
+            state = WktState.FAILING
+            errors.addAll(dbRes.errors)
+          }
+        }
       }
       prepareResultFeedback("Подготовка ответа")
     }
@@ -57,17 +74,28 @@ class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFee
       }
       validation {
         worker("Копируем поля в объект валидации") {
-          feedbackValidity = feedbackUpdateRequest.copy()
+          feedbackValidity = feedbackUpdateRequest.data.copy()
         }
-        worker("Очистка id") {
-          feedbackValidity.workout = WktWorkoutId.NONE
-        }
-        worker("Очистка review") {
-          feedbackValidity.review = "".trim()
-        }
-        validateWorkoutId("Проверка на существование workout")
         validateReviewIsExist("Проверка на существование review")
         finishValidationFeedback("Завершение проверок")
+      }
+      worker {
+        title = "Обновление отзыва"
+        handle {
+          val dbRes = feedbackRepo.updateFeedback(DbFeedbackUpdateRequest(
+            feedbackId = feedbackUpdateRequest.feedbackId,
+            workoutId = feedbackUpdateRequest.workoutId,
+            data = feedbackUpdateRequest.data
+          ))
+          val data = dbRes.data
+          if (dbRes.isSuccess && data != null) {
+            state = WktState.RUNNING
+            feedbackUpdateResponse = data
+          } else {
+            state = WktState.FAILING
+            errors.addAll(dbRes.errors)
+          }
+        }
       }
       prepareResultFeedback("Подготовка ответа")
     }
@@ -78,9 +106,6 @@ class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFee
         stubFeedbackDeleteFail("Имитация ошибки удаления отзыва")
       }
       validation {
-        worker("Очищаем id") {
-          feedbackValidity.id = WktFeedbackId.NONE
-        }
         validateFeedbackIdIsExist("проверка на передачу id отзыва в запросе")
         finishValidationFeedback("Завершение проверок")
       }

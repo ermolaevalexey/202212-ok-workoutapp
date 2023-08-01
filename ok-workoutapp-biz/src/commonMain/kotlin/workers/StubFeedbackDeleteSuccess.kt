@@ -13,9 +13,9 @@ fun ICorChainDsl<WktFeedbackContext>.stubFeedbackDeleteSuccess(title: String) = 
   handle {
     state = WktState.FINISHING
     val stub = WktFeedbackStub.prepareDeleteFeedback(
-      feedbackDeleteRequest.workout.asString(),
-      feedbackDeleteRequest.user?.asString(),
-      feedbackDeleteRequest.id.asString()
+      feedbackDeleteRequest.workoutId.asString(),
+      feedbackDeleteRequest.feedbackId.asString(),
+      feedbackDeleteRequest.userId.asString()
     )
     feedbackDeleteResponse = stub
   }

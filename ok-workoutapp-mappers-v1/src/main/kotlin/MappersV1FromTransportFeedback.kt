@@ -5,8 +5,7 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkMode
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
-import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
-import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackUser
+import ru.otus.otuskotlin.workoutapp.feedback.common.models.*
 import ru.otus.otuskotlin.workoutapp.mappers.v1.exceptions.UnknownRequestClass
 
 fun WktFeedbackContext.fromTransport(request: Request) = when (request) {
@@ -19,7 +18,7 @@ fun WktFeedbackContext.fromTransport(request: Request) = when (request) {
 fun WktFeedbackContext.fromTransport(request: FeedbackCreateRequest) {
   command = WktCommand.FEEDBACK_CREATE
   requestId = request.requestId()
-  feedbackCreateRequest = request.feedback.toInternal()
+  feedbackCreateRequest = request.data.toInternal()
   workMode = request.debug?.fromTransportToWorkMode() ?: WktWorkMode.NONE
   stubCase = request.debug?.fromTransportToStubCase() ?: WktStub.NONE
 }
@@ -35,7 +34,7 @@ fun WktFeedbackContext.fromTransport(request: FeedbackReadRequest) {
 fun WktFeedbackContext.fromTransport(request: FeedbackUpdateRequest) {
   command = WktCommand.FEEDBACK_UPDATE
   requestId = request.requestId()
-  feedbackUpdateRequest = request.feedback.toInternal()
+  feedbackUpdateRequest = request.data.toInternal()
   workMode = request.debug?.fromTransportToWorkMode() ?: WktWorkMode.NONE
   stubCase = request.debug?.fromTransportToStubCase() ?: WktStub.NONE
 }
@@ -43,27 +42,31 @@ fun WktFeedbackContext.fromTransport(request: FeedbackUpdateRequest) {
 fun WktFeedbackContext.fromTransport(request: FeedbackDeleteRequest) {
   command = WktCommand.FEEDBACK_DELETE
   requestId = request.requestId()
-  feedbackDeleteRequest = request.feedback.toInternal()
+  feedbackDeleteRequest = request.data.toInternal()
   workMode = request.debug?.fromTransportToWorkMode() ?: WktWorkMode.NONE
   stubCase = request.debug?.fromTransportToStubCase() ?: WktStub.NONE
 }
-private fun FeedbackCreateRequestPayload?.toInternal() = WktFeedbackPayload(
-  workout = this?.workout.toWktWorkoutId(),
-  review = this?.review ?: "",
-  rating = this?.rating ?: 0.0,
-  user = this?.user.toWktUserId()
+private fun FeedbackCreateRequestAllOfData?.toInternal() = WktFeedbackCreateRequest(
+  workoutId = this?.workoutId.toWktWorkoutId(),
+  data = WktFeedbackPayload(
+    review = this?.payload?.review ?: "",
+    rating = this?.payload?.rating ?: 0.0,
+    userId = this?.userId.toWktUserId()
+  )
 )
 
-private fun FeedbackUpdateRequestPayload?.toInternal() = WktFeedbackPayload(
-  id = this?.id.toWktFeedbackId(),
-  review = this?.review ?: "",
-  rating = this?.rating ?: 0.0,
-  user = this?.user.toWktUserId()
+private fun FeedbackUpdateRequestAllOfData?.toInternal() = WktFeedbackUpdateRequest(
+  feedbackId = this?.feedbackId.toWktFeedbackId(),
+  data = WktFeedbackPayload(
+    review = this?.payload?.data?.review ?: "",
+    rating = this?.payload?.data?.rating ?: 0.0,
+    userId = this?.userId.toWktUserId()
+  )
 )
 
-private fun FeedbackDeleteRequestPayload?.toInternal() = WktFeedbackPayload(
-  id = this?.id.toWktFeedbackId(),
-  user = this?.user.toWktUserId()
+private fun FeedbackDeleteRequestAllOfData?.toInternal() = WktFeedbackDeleteRequest(
+  feedbackId = this?.feedbackId.toWktFeedbackId(),
+  userId = this?.userId.toWktUserId()
 )
 
 private fun FeedbackUser?.toInternal() = WktFeedbackUser(

@@ -56,5 +56,5 @@ private fun WktFeedbackUser.toTransport() = FeedbackUser(
 
 private fun WktFeedbackPayload.toTransport() = FeedbackDeleteResponsePayload(
   id = this.id.toTransport(),
-  workout = this.workout.toTransport()
+  workout = this.workoutId.toTransport()
 )
