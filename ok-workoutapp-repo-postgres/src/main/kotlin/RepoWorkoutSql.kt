@@ -2,6 +2,7 @@ package ru.otus.otuskotlin.workoutapp.repo.postgres
 
 import com.benasher44.uuid.uuid4
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.otus.otuskotlin.workoutapp.common.models.WktError
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
@@ -104,9 +105,28 @@ class RepoWorkoutSql (
     read(req.id)
   }
 
-  override suspend fun updateWorkout(req: DbWorkoutRequest): DbWorkoutResponse = update(req.workout.id) {
+  override suspend fun updateWorkout(req: DbWorkoutRequest): DbWorkoutResponse = update(req.workout.id) {wkt ->
     WorkoutTable.update({ WorkoutTable.id eq req.workout.id.asString() }) {
-      to(it, req.workout.copy(), randomUuid)
+      to(it, req.workout.copy(
+        title = req.workout.title.takeIf { it.isNotEmpty() } ?: wkt.title,
+        description = req.workout.description.takeIf { it.isNotEmpty() } ?: wkt.description,
+        equipment = req.workout.equipment.takeIf { it != WktEquipment.NONE } ?: wkt.equipment,
+        type = req.workout.type.takeIf { it != WktWorkoutType.NONE } ?: wkt.type,
+        rating = req.workout.rating.takeIf { it > (0).toDouble() } ?: wkt.rating
+      ), randomUuid)
+    }
+
+
+    WorkoutContentTable.update ({ WorkoutContentTable.workoutId eq req.workout.id.asString() }) {
+      to(it, req.workout.content.copy(workoutId = req.workout.id), randomUuid)
+    }
+
+    if (req.workout.content.steps?.isNotEmpty() == true) {
+      req.workout.content.steps?.forEach {step ->
+        WorkoutStepTable.insert {
+          to(it, step.copy(workoutId = req.workout.id))
+        }
+      }
     }
 
     read(req.workout.id)

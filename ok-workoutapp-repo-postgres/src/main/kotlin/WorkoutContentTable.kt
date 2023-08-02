@@ -23,8 +23,8 @@ object WorkoutContentTable : Table("workout_content") {
   )
 
   fun to(it: UpdateBuilder<*>, wkt: WktWorkoutContent, randomUuid: () -> String) {
-    it[id] = wkt.id.takeIf { it.toString().isNotEmpty() } ?: randomUuid()
+    it[id] = wkt.id.takeIf { it != "" } ?: randomUuid()
     it[workoutId] = wkt.workoutId.asString()
-    it[video] = wkt.video
+    it[video] = wkt.video.takeIf { it.isNotEmpty() } ?: video.toString()
   }
 }

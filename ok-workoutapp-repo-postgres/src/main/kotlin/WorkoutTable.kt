@@ -51,8 +51,8 @@ object WorkoutTable : Table("workout") {
 
   fun to(it: UpdateBuilder<*>, wkt: WktWorkout, randomUuid: () -> String) {
     it[id] = wkt.id.takeIf { it != WktWorkoutId.NONE }?.asString() ?: randomUuid()
-    it[title] = wkt.title
-    it[description] = wkt.description
+    it[title] = wkt.title.takeIf { it.isNotEmpty() } ?:  ""
+    it[description] = wkt.description.takeIf { it.isNotEmpty() } ?: ""
     it[type] = wkt.type
     it[equipment] = wkt.equipment
     it[rating] = wkt.rating
