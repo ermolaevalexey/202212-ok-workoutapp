@@ -13,8 +13,11 @@ import ru.otus.otuskotlin.workoutapp.cor.rootChain
 import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackCorSettings
+import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
 import ru.otus.otuskotlin.workoutapp.feedback.common.repo.DbFeedbackCreateRequest
+import ru.otus.otuskotlin.workoutapp.feedback.common.repo.DbFeedbackIdWorkoutIdRequest
 import ru.otus.otuskotlin.workoutapp.feedback.common.repo.DbFeedbackUpdateRequest
+import ru.otus.otuskotlin.workoutapp.feedback.common.repo.DbFeedbackWorkoutIdRequest
 
 class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFeedbackCorSettings()) {
   suspend fun exec(ctx: WktFeedbackContext) = BusinessChainFeedback.exec(ctx.apply { settings = this@WktFeedbackProcessor.settings })
@@ -35,7 +38,7 @@ class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFee
         finishValidationFeedback("Завершение проверок")
       }
       worker {
-        title = "Создание тренировки"
+        title = "Создание отзыва"
         handle {
           val dbRes = feedbackRepo.createFeedback(DbFeedbackCreateRequest(
             workoutId = feedbackCreateRequest.workoutId,
@@ -60,8 +63,31 @@ class WktFeedbackProcessor(private val settings: WktFeedbackCorSettings = WktFee
         stubValidationFeedbackBadWorkoutId("Имитация ошибки плохого id тренировки")
       }
       validation {
-        validateWorkoutId("Проверка на существование поля workout")
+        worker("Копируем поля в объект валидации") {
+          feedbackValidity = WktFeedbackPayload(
+            workoutId = feedbackReadRequest
+          )
+        }
+        validateWorkoutId("Проверка на существование поля workoutId")
         finishValidationFeedback("Завершение проверок")
+      }
+      worker {
+        title = "Получение отзывов"
+        handle {
+          val dbRes = feedbackRepo.readFeedback(
+            DbFeedbackWorkoutIdRequest(
+              workoutId = feedbackReadRequest,
+            )
+          )
+          val data = dbRes.data
+          if (dbRes.isSuccess) {
+            state = WktState.RUNNING
+            feedbackReadResponse = data.toMutableList()
+          } else {
+            state = WktState.FAILING
+            errors.addAll(dbRes.errors)
+          }
+        }
       }
       prepareResultFeedback("Подготовка ответа")
     }

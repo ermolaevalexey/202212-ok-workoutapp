@@ -9,5 +9,5 @@ data class WktFeedbackPayload (
   var workoutId: WktWorkoutId = WktWorkoutId.NONE,
   var review: String = "",
   var rating: Double = 0.0,
-  var userId: WktUserId? = WktUserId.NONE
+  var userId: WktUserId = WktUserId.NONE
 )

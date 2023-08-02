@@ -208,6 +208,11 @@ components:
           $ref: "#/components/schemas/UserId"
         name:
           type: string
+        role:
+          type: string
+          enum:
+            - user
+            - admin
 
     FeedbackBase:
       type: object
@@ -401,13 +406,6 @@ components:
                   $ref: "#/components/schemas/WorkoutId"
             - $ref: "#/components/schemas/Workout"
 
-    FeedbackReadRequestPayload:
-      allOf:
-        - type: object
-          properties:
-            workout:
-              $ref: "#/components/schemas/WorkoutId"
-
     FeedbackUpdateRequestPayload:
       allOf:
         - type: object
@@ -526,8 +524,11 @@ components:
         - $ref: "#/components/schemas/RequestDebug"
         - type: object
           properties:
-            feedback:
-              $ref: "#/components/schemas/FeedbackReadRequestPayload"
+            data:
+              type: object
+              properties:
+                workoutId:
+                  $ref: "#/components/schemas/WorkoutId"
 
     FeedbackUpdateRequest:
       allOf:
@@ -539,6 +540,8 @@ components:
               type: object
               properties:
                 feedbackId:
+                  $ref: "#/components/schemas/FeedbackId"
+                workoutId:
                   $ref: "#/components/schemas/FeedbackId"
                 userId:
                   $ref: "#/components/schemas/UserId"

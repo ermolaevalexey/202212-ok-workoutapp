@@ -62,7 +62,7 @@ fun Application.configureRouting(appSettings: WktAppSettings) {
 
       route("feedback") {
         post ("read") {
-          call.readFeedback()
+          call.readFeedback(appSettings)
         }
 
         post ("create") {
@@ -70,11 +70,11 @@ fun Application.configureRouting(appSettings: WktAppSettings) {
         }
 
         post ("update") {
-          call.updateFeedback()
+          call.updateFeedback(appSettings)
         }
 
         post ("delete") {
-          call.deleteFeedback()
+          call.deleteFeedback(appSettings)
         }
       }
     }

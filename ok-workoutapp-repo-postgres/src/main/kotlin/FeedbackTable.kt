@@ -24,7 +24,7 @@ object FeedbackTable : Table("feedback") {
     review = stmt[review],
     rating = stmt[rating],
     workout = WktWorkoutId(stmt[workoutId]),
-    user = UserTable.select { id.eq(stmt[userId]) }.map { UserTable.from(it) }.first()
+    user = UserTable.select { UserTable.id.eq(stmt[userId]) }.map { UserTable.from(it) }.first()
   )
 
   fun from(res : ResultRow) = WktFeedback(
@@ -32,14 +32,14 @@ object FeedbackTable : Table("feedback") {
     review = res[review],
     rating = res[rating],
     workout = WktWorkoutId(res[workoutId]),
-    user = UserTable.select { id.eq(res[userId]) }.map { UserTable.from(it) }.first()
+    user = UserTable.select { UserTable.id.eq(res[userId]) }.map { UserTable.from(it) }.first()
   )
 
   fun to(it: UpdateBuilder<*>, feedback: WktFeedbackPayload, randomUuid: () -> String) {
     it[id] = feedback.id.takeIf { it != WktFeedbackId.NONE }?.asString() ?: randomUuid()
     it[review] = feedback.review
     it[rating] = feedback.rating
-    it[userId] = feedback.userId.toString()
-    it[workoutId] = feedback.workoutId.toString()
+    it[userId] = feedback.userId.asString()
+    it[workoutId] = feedback.workoutId.asString()
   }
 }

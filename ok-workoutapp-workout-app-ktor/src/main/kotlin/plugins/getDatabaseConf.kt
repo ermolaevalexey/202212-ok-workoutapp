@@ -3,6 +3,7 @@ package ru.otus.otuskotlin.workoutapp.workout.app.ktor.plugins
 import io.ktor.server.application.*
 import ru.otus.otuskotlin.workoutapp.workout.app.ktor.configs.PostgresConfig
 import ru.otus.otuskotlin.workoutapp.feedback.common.repo.IFeedbackRepository
+import ru.otus.otuskotlin.workoutapp.repo.postgres.RepoFeedbackSql
 import ru.otus.otuskotlin.workoutapp.repo.postgres.RepoWorkoutSql
 import ru.otus.otuskotlin.workoutapp.repo.postgres.SqlProperties
 import ru.otus.otuskotlin.workoutapp.repoInMemory.FeedbackRepoInMemory
@@ -25,7 +26,7 @@ fun Application.getDatabaseConfWorkout(type: WktDbType): IWorkoutRepository {
 }
 
 fun Application.getDatabaseConfFeedback(wktRepo: IWorkoutRepository): IFeedbackRepository {
-  return initInMemoryFeedback(wktRepo)
+  return initPostgresFeedback(wktRepo)
 }
 
 private fun Application.initInMemoryWorkout(): WorkoutRepoInMemory {
@@ -41,6 +42,19 @@ private fun Application.initPostgresWorkout(): IWorkoutRepository {
       password = config.password,
       schema = config.schema,
     )
+  )
+}
+
+private fun Application.initPostgresFeedback(wktRepo: IWorkoutRepository): IFeedbackRepository {
+  val config = PostgresConfig()
+  return RepoFeedbackSql(
+    properties = SqlProperties(
+      url = config.url,
+      user = config.user,
+      password = config.password,
+      schema = config.schema,
+    ),
+    wktRepository = wktRepo
   )
 }
 

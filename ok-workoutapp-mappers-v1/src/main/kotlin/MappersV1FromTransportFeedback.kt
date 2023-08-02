@@ -1,5 +1,6 @@
 package ru.otus.otuskotlin.workoutapp.mappers.v1
 
+import ru.otus.otuskotlin.workoutapp.common.models.WktUserRole
 import ru.otus.otuskotlin.workoutapp.api.v1.models.*
 import ru.otus.otuskotlin.workoutapp.common.models.WktCommand
 import ru.otus.otuskotlin.workoutapp.common.models.WktWorkMode
@@ -26,7 +27,7 @@ fun WktFeedbackContext.fromTransport(request: FeedbackCreateRequest) {
 fun WktFeedbackContext.fromTransport(request: FeedbackReadRequest) {
   command = WktCommand.FEEDBACK_READ
   requestId = request.requestId()
-  feedbackReadRequest = request.feedback?.workout.toWktWorkoutId()
+  feedbackReadRequest = request.data?.workoutId.toWktWorkoutId()
   workMode = request.debug?.fromTransportToWorkMode() ?: WktWorkMode.NONE
   stubCase = request.debug?.fromTransportToStubCase() ?: WktStub.NONE
 }
@@ -57,6 +58,7 @@ private fun FeedbackCreateRequestAllOfData?.toInternal() = WktFeedbackCreateRequ
 
 private fun FeedbackUpdateRequestAllOfData?.toInternal() = WktFeedbackUpdateRequest(
   feedbackId = this?.feedbackId.toWktFeedbackId(),
+  workoutId = this?.workoutId.toWktWorkoutId(),
   data = WktFeedbackPayload(
     review = this?.payload?.data?.review ?: "",
     rating = this?.payload?.data?.rating ?: 0.0,
@@ -71,5 +73,6 @@ private fun FeedbackDeleteRequestAllOfData?.toInternal() = WktFeedbackDeleteRequ
 
 private fun FeedbackUser?.toInternal() = WktFeedbackUser(
   id = this?.id.toWktUserId(),
-  name = this?.name ?: ""
+  name = this?.name ?: "",
+  role = WktUserRole.fromValue(this?.role.toString())
 )

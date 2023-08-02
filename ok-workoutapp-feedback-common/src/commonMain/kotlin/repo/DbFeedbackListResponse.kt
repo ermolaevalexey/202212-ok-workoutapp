@@ -14,5 +14,9 @@ data class DbFeedbackListResponse(
     fun success(result: List<WktFeedback>) = DbFeedbackListResponse(result, true)
     fun error(errors: List<WktError>) = DbFeedbackListResponse(emptyList(), false, errors)
     fun error(error: WktError) = DbFeedbackListResponse(emptyList(), false, listOf(error))
+
+    val errorEmptyId = error(ru.otus.otuskotlin.workoutapp.common.helpers.errorEmptyId)
+
+    val errorNotFound = error(ru.otus.otuskotlin.workoutapp.common.helpers.errorNotFound)
   }
 }

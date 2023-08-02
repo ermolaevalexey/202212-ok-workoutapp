@@ -10,11 +10,13 @@ import ru.otus.otuskotlin.workoutapp.common.models.WktWorkoutId
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedback
 import ru.otus.otuskotlin.workoutapp.feedback.common.models.WktFeedbackPayload
 import ru.otus.otuskotlin.workoutapp.feedback.common.repo.*
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.IWorkoutRepository
 
 class RepoFeedbackSql (
   properties: SqlProperties,
   initObjects: Collection<WktFeedbackPayload> = emptyList(),
   val randomUuid: () -> String = { uuid4().toString() },
+  private val wktRepository: IWorkoutRepository,
 ) : IFeedbackRepository {
 
   init {
@@ -29,7 +31,7 @@ class RepoFeedbackSql (
 
     transaction {
       if (properties.dropDatabase) SchemaUtils.drop(FeedbackTable)
-      SchemaUtils.create(WorkoutTable)
+      SchemaUtils.create(FeedbackTable)
       initObjects.forEach { createFbk(it) }
     }
   }
@@ -99,8 +101,13 @@ class RepoFeedbackSql (
   }
 
   override suspend fun readFeedback(req: DbFeedbackWorkoutIdRequest): DbFeedbackListResponse = transactionListWrapper {
-    val res = FeedbackTable.select {
+    if (req.workoutId == WktWorkoutId.NONE) return@transactionListWrapper DbFeedbackListResponse.errorEmptyId
+    WorkoutTable.select {
       WorkoutTable.id eq req.workoutId.asString()
+    }.singleOrNull() ?: return@transactionListWrapper DbFeedbackListResponse.errorNotFound
+
+    val res = FeedbackTable.select {
+      FeedbackTable.workoutId eq req.workoutId.asString()
     }
     return@transactionListWrapper DbFeedbackListResponse.success(res.map { FeedbackTable.from(it) })
   }
