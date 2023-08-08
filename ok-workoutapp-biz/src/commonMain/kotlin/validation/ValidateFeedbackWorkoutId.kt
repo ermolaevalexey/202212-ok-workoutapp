@@ -9,7 +9,8 @@ import ru.otus.otuskotlin.workoutapp.feedback.common.helpers.fail
 fun ICorChainDsl<WktFeedbackContext>.validateWorkoutId(title: String) = worker {
   this.title = title
   on {
-    feedbackValidity.workout.asString().isEmpty()
+    println(feedbackValidity.workoutId.asString())
+    feedbackValidity.workoutId.asString().isEmpty()
   }
   handle {
     fail(

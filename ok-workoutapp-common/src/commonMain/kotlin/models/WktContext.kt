@@ -1,6 +1,5 @@
 package ru.otus.otuskotlin.workoutapp.common.models
 
-import ru.otus.otuskotlin.workoutapp.api.v1.models.Request
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
 
 interface WktContext {
@@ -10,5 +9,5 @@ interface WktContext {
   var stubCase: WktStub
 }
 
-fun WktContext.fromTransport(request: Request) {}
+fun WktContext.fromTransport(request: Any) {}
 fun WktContext.toTransport() {}

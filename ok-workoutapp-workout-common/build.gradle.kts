@@ -24,6 +24,7 @@ kotlin {
     val commonTest by getting {
       dependencies {
         implementation(kotlin("test-common"))
+        implementation(project(":ok-workoutapp-common"))
         implementation(kotlin("test-annotations-common"))
       }
     }

@@ -50,9 +50,9 @@ dependencies {
 
   // transport models
   implementation(project(":ok-workoutapp-common"))
+  implementation(project(":ok-workoutapp-api-v1-jackson"))
   implementation(project(":ok-workoutapp-workout-common"))
   implementation(project(":ok-workoutapp-feedback-common"))
-  implementation(project(":ok-workoutapp-api-v1-jackson"))
   implementation(project(":ok-workoutapp-mappers-v1"))
   // logic
   implementation(project(":ok-workoutapp-biz"))

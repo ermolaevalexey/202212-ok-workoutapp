@@ -6,7 +6,7 @@ import ru.otus.otuskotlin.workoutapp.cor.worker
 import ru.otus.otuskotlin.workoutapp.feedback.common.WktFeedbackContext
 import ru.otus.otuskotlin.workoutapp.workout.common.WktWorkoutContext
 
-fun ICorChainDsl<WktWorkoutContext>.finishValidation(title: String) = worker {
+fun ICorChainDsl<WktWorkoutContext>.finishValidationWorkout(title: String) = worker {
   this.title = title
   on { state == WktState.RUNNING }
   handle {
@@ -14,7 +14,7 @@ fun ICorChainDsl<WktWorkoutContext>.finishValidation(title: String) = worker {
   }
 }
 
-fun ICorChainDsl<WktFeedbackContext>.finishValidation(title: String) = worker {
+fun ICorChainDsl<WktFeedbackContext>.finishValidationFeedback(title: String) = worker {
   this.title = title
   on { state == WktState.RUNNING }
   handle {

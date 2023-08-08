@@ -16,7 +16,6 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib-common"))
-        implementation(project(":ok-workoutapp-api-v1-jackson"))
         implementation(project(":ok-workoutapp-common"))
         implementation(project(":ok-workoutapp-workout-common"))
         implementation(project(":ok-workoutapp-feedback-common"))
@@ -29,7 +28,6 @@ kotlin {
       dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))
-
         api("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
       }
     }

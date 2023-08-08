@@ -5,6 +5,7 @@ import ru.otus.otuskotlin.workoutapp.common.constants.*
 import ru.otus.otuskotlin.workoutapp.common.models.*
 import ru.otus.otuskotlin.workoutapp.workout.common.models.*
 import ru.otus.otuskotlin.workoutapp.common.stubs.WktStub
+import ru.otus.otuskotlin.workoutapp.workout.common.repo.IWorkoutRepository
 
 data class WktWorkoutContext(
   override var command: WktCommand = WktCommand.NONE,
@@ -16,7 +17,8 @@ data class WktWorkoutContext(
 
   var requestId: WktRequestId = WktRequestId.NONE,
   var timeStart: Instant = Instant.NONE,
-
+  var settings: WktWorkoutCorSettings = WktWorkoutCorSettings.NONE,
+  var workoutRepo: IWorkoutRepository = IWorkoutRepository.NONE,
   var workoutValidity: WktWorkout = WktWorkout(),
   var workoutValid: WktWorkout = WktWorkout(),
 

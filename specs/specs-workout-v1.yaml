@@ -208,6 +208,11 @@ components:
           $ref: "#/components/schemas/UserId"
         name:
           type: string
+        role:
+          type: string
+          enum:
+            - user
+            - admin
 
     FeedbackBase:
       type: object
@@ -401,23 +406,6 @@ components:
                   $ref: "#/components/schemas/WorkoutId"
             - $ref: "#/components/schemas/Workout"
 
-    FeedbackCreateRequestPayload:
-      allOf:
-        - type: object
-          properties:
-            workout:
-              $ref: "#/components/schemas/WorkoutId"
-            user:
-              $ref: "#/components/schemas/UserId"
-        - $ref: "#/components/schemas/FeedbackBase"
-
-    FeedbackReadRequestPayload:
-      allOf:
-        - type: object
-          properties:
-            workout:
-              $ref: "#/components/schemas/WorkoutId"
-
     FeedbackUpdateRequestPayload:
       allOf:
         - type: object
@@ -426,7 +414,10 @@ components:
               $ref: "#/components/schemas/FeedbackId"
             user:
               $ref: "#/components/schemas/UserId"
-        - $ref: "#/components/schemas/FeedbackBase"
+        - type: object
+          properties:
+            data:
+              $ref: "#/components/schemas/FeedbackBase"
 
     FeedbackDeleteRequestPayload:
       allOf:
@@ -457,9 +448,11 @@ components:
               groupName:
                 type: string
               workouts:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Workout"
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/Workout"
 
     FeedbackUpdateResponsePayload:
       allOf:
@@ -514,8 +507,16 @@ components:
         - $ref: "#/components/schemas/RequestDebug"
         - type: object
           properties:
-            feedback:
-              $ref: "#/components/schemas/FeedbackCreateRequestPayload"
+            data:
+              type: object
+              properties:
+                workoutId:
+                  $ref: "#/components/schemas/WorkoutId"
+                userId:
+                  $ref: "#/components/schemas/UserId"
+                payload:
+                  $ref: "#/components/schemas/FeedbackBase"
+
 
     FeedbackReadRequest:
       allOf:
@@ -523,8 +524,11 @@ components:
         - $ref: "#/components/schemas/RequestDebug"
         - type: object
           properties:
-            feedback:
-              $ref: "#/components/schemas/FeedbackReadRequestPayload"
+            data:
+              type: object
+              properties:
+                workoutId:
+                  $ref: "#/components/schemas/WorkoutId"
 
     FeedbackUpdateRequest:
       allOf:
@@ -532,8 +536,17 @@ components:
         - $ref: "#/components/schemas/RequestDebug"
         - type: object
           properties:
-            feedback:
-              $ref: "#/components/schemas/FeedbackUpdateRequestPayload"
+            data:
+              type: object
+              properties:
+                feedbackId:
+                  $ref: "#/components/schemas/FeedbackId"
+                workoutId:
+                  $ref: "#/components/schemas/FeedbackId"
+                userId:
+                  $ref: "#/components/schemas/UserId"
+                payload:
+                  $ref: "#/components/schemas/FeedbackUpdateRequestPayload"
 
     FeedbackDeleteRequest:
       allOf:
@@ -541,8 +554,13 @@ components:
         - $ref: "#/components/schemas/RequestDebug"
         - type: object
           properties:
-            feedback:
-              $ref: "#/components/schemas/FeedbackDeleteRequestPayload"
+            data:
+              type: object
+              properties:
+                feedbackId:
+                  $ref: "#/components/schemas/FeedbackId"
+                userId:
+                  $ref: "#/components/schemas/UserId"
 
     # RESPONSES OBJECTS ======================
     WorkoutCreateResponse:

@@ -5,5 +5,6 @@ data class WktError (
   val group: String = "",
   val field: String = "",
   val message: String = "",
+  val level: String = "",
   val exception: Throwable? = null,
 )

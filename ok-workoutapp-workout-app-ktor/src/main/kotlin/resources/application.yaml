@@ -1,0 +1,10 @@
+ktor:
+  development: true
+  deployment:
+    port: 8080
+  watch:
+    - classes
+    - resources
+  application:
+    modules:
+      - "ru.otus.otuskotlin.workoutapp.workout.app.ktor.ApplicationKt.module"

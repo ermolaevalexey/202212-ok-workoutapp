@@ -16,7 +16,7 @@ fun ICorChainDsl<WktFeedbackContext>.stubFeedbackDeleteFail(title: String) = wor
         group = "operations",
         code = "operation-feedback-delete",
         field = "description",
-        message = "cannot delete feedback by id ${feedbackDeleteRequest.id}"
+        message = "cannot delete feedback by id ${feedbackDeleteRequest.feedbackId}"
       )
     )
   }

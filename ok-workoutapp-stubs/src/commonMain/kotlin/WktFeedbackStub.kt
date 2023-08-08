@@ -40,9 +40,9 @@ object WktFeedbackStub {
   )
 
   fun prepareDeleteFeedback(workoutId: String, userId: String?, feedbackId: String): WktFeedbackPayload = WktFeedbackPayload(
+    workoutId = WktWorkoutId(workoutId),
     id = WktFeedbackId(feedbackId),
-    workout = WktWorkoutId(workoutId),
-    user = if (userId is String) WktUserId(userId) else WktUserId.NONE
+    userId = if (userId is String) WktUserId(userId) else WktUserId.NONE
   )
 
   private fun prepareFeedback(id: String, workoutId: String, userId: String?, rating: Double): WktFeedback = WKT_FEEDBACK.copy(

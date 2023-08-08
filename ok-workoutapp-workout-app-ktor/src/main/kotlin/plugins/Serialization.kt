@@ -1,4 +1,4 @@
-package ok.workoutapp.workout.app.ktor.plugins
+package ru.otus.otuskotlin.workoutapp.workout.app.ktor.plugins
 
 import io.ktor.serialization.jackson.jackson
 import io.ktor.server.plugins.contentnegotiation.*
